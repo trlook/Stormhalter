@@ -38,6 +38,9 @@ namespace Kesmai.WorldForge.UI.Documents
 	
 	public partial class EntitiesDocument : UserControl
 	{
+		public class GetSelectedSpawner : RequestMessage<Spawner>
+		{
+		}
 		public EntitiesDocument()
 		{
 			InitializeComponent();
@@ -48,7 +51,11 @@ namespace Kesmai.WorldForge.UI.Documents
 			WeakReferenceMessenger.Default
 				.Register<EntitiesDocument, Entity>(
 					this, (r, m) => { ChangeEntity(m); });
+
+			WeakReferenceMessenger.Default.Register<EntitiesDocument, GetSelectedSpawner>(this,
+					(r, m) => m.Reply(_spawnersList.SelectedItem as Spawner));
 		}
+
 		private void ChangeEntity(Entity entity)
 		{
 			var presenter = ServiceLocator.Current.GetInstance<ApplicationPresenter>();
@@ -73,9 +80,9 @@ namespace Kesmai.WorldForge.UI.Documents
 			{
 			}
 		}
-		
+
 		public string Name => "(Entities)";
-		
+
 		private int _newEntityCount = 1;
 
 		private Entity _selectedEntity;
@@ -87,13 +94,28 @@ namespace Kesmai.WorldForge.UI.Documents
 			set
 			{
 				SetProperty(ref _selectedEntity, value, true);
-					
+
+				_relatedSpawners.Clear();
+				foreach (Spawner spawner in _segment.Spawns.Location.Where(s => s.Entries.Any(e => e.Entity == SelectedEntity)))
+				{
+					_relatedSpawners.Add(spawner);
+				}
+				foreach (Spawner spawner in _segment.Spawns.Region.Where(s => s.Entries.Any(e => e.Entity == SelectedEntity)))
+				{
+					_relatedSpawners.Add(spawner);
+				}
+
+
 				if (value != null)
 					WeakReferenceMessenger.Default.Send(new SelectedEntityChangedMessage(value));
 			}
 		}
 
 		public SegmentEntities Source => _segment.Entities;
+
+		private ObservableCollection<Spawner> _relatedSpawners = new ObservableCollection<Spawner>();
+
+		public ObservableCollection<Spawner> RelatedSpawners { get=> _relatedSpawners;}
 		
 		public RelayCommand AddEntityCommand { get; set; }
 		public RelayCommand<Entity> RemoveEntityCommand { get; set; }
@@ -112,6 +134,9 @@ namespace Kesmai.WorldForge.UI.Documents
 			CopyEntityCommand = new RelayCommand<Entity>(CopyEntity,
 				(entity) => (SelectedEntity != null));
 			CopyEntityCommand.DependsOn(() => SelectedEntity);
+
+			
+
 		}
 
 		public void AddEntity()
