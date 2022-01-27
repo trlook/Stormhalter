@@ -1,6 +1,7 @@
 using System;
 using System.IO;
-
+using Kesmai.Server.Accounting;
+using Kesmai.Server.Engines.Commands;
 using Kesmai.Server.Game;
 using Kesmai.Server.Spells;
 
@@ -12,37 +13,59 @@ namespace Kesmai.Server.Items
 		public override int LabelNumber => 6000043; 
 
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public Skill Skill => Skill.Hand;
 
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual WeaponFlags Flags => WeaponFlags.Bashing;
 
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int BaseArmorBonus => 0;
 
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int BaseAttackBonus => 0;
 
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int SlashingProtection => 0;
 
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int PiercingProtection => 0;
 
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int BashingProtection => 0;
 
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int ProjectileProtection => 0;
 
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int MinimumDamage => 0;
 
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public virtual int MaximumDamage => 0;
 
 		/// <inheritdoc />
-		public virtual ShieldPenetration Penetration => ShieldPenetration.None;
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
+		public virtual ShieldPenetration Penetration => ShieldPenetration.Light;
 
 		/// <inheritdoc />
 		public override int Category => 8;
@@ -51,6 +74,8 @@ namespace Kesmai.Server.Items
 		public override int AttackSound => 47;
 		
 		/// <inheritdoc />
+		[WorldForge]
+		[CommandProperty(AccessLevel.GameMaster)]
 		public int MaxRange => 0;
 
 		public Poison Poison { get; set; }
@@ -74,7 +99,7 @@ namespace Kesmai.Server.Items
 		/// <remarks>
 		/// Attack bonus provided by gloves is dependent on hand skill, hindrance, and <see cref="Penetration"/>.
 		/// </remarks>
-		public virtual int GetAttackBonus(MobileEntity entity)
+		public virtual int GetAttackBonus(MobileEntity attacker, MobileEntity defender)
 		{
 			return BaseAttackBonus;
 		}
@@ -86,6 +111,14 @@ namespace Kesmai.Server.Items
 		{
 			return entity.GetRoundDelay();
 		}
+		
+		/// <summary>
+		/// Gets the multiplier for skill gain awarded per weapon swing.
+		/// </summary>
+		public virtual double GetSkillMultiplier()
+		{
+			return 1.0;
+		}
 
 		/// <summary>
 		/// Calculates the blocking benefit of this instance against the specified item.
@@ -96,6 +129,10 @@ namespace Kesmai.Server.Items
 				return ProjectileProtection;
 
 			return BaseArmorBonus;
+		}
+		
+		public virtual void OnHit(MobileEntity attacker, MobileEntity defender)
+		{
 		}
 	}
 }

@@ -98,6 +98,7 @@
   <entry index="0000594">Stalker in the Shadows</entry>
   <entry index="0000595">Perception</entry>
   <entry index="0000596">Backstab</entry>
+  <entry index="0000597">Vigor</entry>
   
   <entry index="0000600">Cure</entry>
   <entry index="0000601">Light</entry>
@@ -280,6 +281,7 @@
   <entry index="6000099">pouch</entry>
   <entry index="6000100">dull opal</entry>
   <entry index="6000101">feather</entry>
+  <entry index="6000102">idol</entry>
   <entry index="6005000">corpse</entry>
 
   <entry index="6100000">{0}</entry>
@@ -331,13 +333,15 @@
   <entry index="6100105">You feel more resolute.</entry>
   <entry index="6100106">You feel more hale.</entry>
 
+  <entry index="6199998">gold coins.</entry>
+  <entry index="6199999">You are looking at {0} {1}</entry>
   <entry index="6200000">You are looking at {0}</entry>
 
   <entry index="6200001">a gold coin.</entry>
   <entry index="6200002">a suit of leather armor.</entry>
   <entry index="6200003">a heavy battle axe with gleaming steel blades. The axe is emitting a faint blue glow. The weapon is lawful.</entry>
   <entry index="6200004">a black broadsword. The sword is emitting a faint blue glow. The weapon is lawful.</entry>
-  <entry index="6200005">a clear glass bottle.  Inside you see a cloudy white liquid.</entry>
+  <entry index="6200005">a clear glass bottle.</entry>
   <entry index="6200006">a small silver ring with a shiny black stone.</entry>
   <entry index="6200007">a vermeil ring.</entry>
   <entry index="6200008">a long black iron rod with glowing red gems arranged in a ring near the center.  The weapon is lawful.</entry>
@@ -419,10 +423,10 @@
   <entry index="6200084">a golden bracelet bejeweled with sapphires.</entry>
   <entry index="6200085">a white porcelain bottle adorned with lotus blossoms.</entry>
   <entry index="6200086">a black ceramic bottle.</entry>
-  <entry index="6200087">a clear glass bottle.  Inside you see a clear liquid.</entry>
-  <entry index="6200088">a clear bottle made of yellowish glass.  Inside you see a cloudy white liquid.</entry>
-  <entry index="6200089">a clear bottle made of yellowish glass.  Inside you see a yellow liquid.</entry>
-  <entry index="6200090">a clear bottle made of yellowish glass.  Inside you see a red liquid.</entry>
+  <entry index="6200087">a clear glass bottle.</entry>
+  <entry index="6200088">a clear bottle made of yellowish glass.</entry>
+  <entry index="6200089">a clear bottle made of yellowish glass.</entry>
+  <entry index="6200090">a clear bottle made of yellowish glass.</entry>
   <entry index="6200091">a clear bottle with a brown label.</entry>
   <entry index="6200092">a clear bottle filled with a green liquid.</entry>
   <entry index="6200093">a pale-blue bottle streaked with white lines.</entry>
@@ -436,7 +440,7 @@
   <entry index="6200101">a large silver bottle encrusted with sapphires.</entry>
   <entry index="6200102">an odd looking gold colored bottle with a scorpion painted on one side.</entry>
   <entry index="6200103">a steel bottle stamped with the icon of a bull.</entry>
-  <entry index="6200104">a green glass bottle. Inside you see a cloudy white liquid</entry>
+  <entry index="6200104">a green glass bottle.</entry>
   <entry index="6200105">a green glass bottle. Inside you see a yellow liquid.</entry>
   <entry index="6200106">a green glass bottle. Inside you see a red liquid.</entry>
   <entry index="6200107">a heavy glass bottle mounted on a gold base and set with emeralds.</entry>
@@ -495,7 +499,7 @@
   <entry index="6200160">a heavy halberd.  The pole is perfect ash and the blade is forged from a golden copper colored alloy.</entry>
   <entry index="6200161">a silver colored javelin shaped like a lightning bolt.</entry>
   <entry index="6200162">a fine sword made of an otherworldly metal.  Looking at the blade makes you dizzy, as if you were looking at the wings of a hummingbird. The sword is emitting a faint blue glow. The weapon is lawful.</entry>
-  <entry index="6200163">an ebony staff encrusted with diamonds.  The weapon eminates power. The staff is emitting a faint blue glow. The weapon is lawful.</entry>
+  <entry index="6200163">an ebony staff encrusted with diamonds. The weapon emanates power. The weapon is lawful.</entry>
   <entry index="6200164">a fine throwing dagger with the symbol of the yasnaki marking the hilt.</entry>
   <entry index="6200165">an impossibly thin black blade mounted on a silver hilt.</entry>
   <entry index="6200166">a heavy flail with a huge spiked ball on a steel chain.</entry>
@@ -618,6 +622,25 @@
   <entry index="6200283">a ring with crashing ocean waves.</entry>
   <entry index="6200284">a pair of gloves that emanate strands of darkness.</entry>
   <entry index="6200285">a bright feather.</entry>
+  <entry index="6200286">a clam shell.</entry>
+  <entry index="6200287">an oyster shell.</entry>
+  <entry index="6200288">a conch.</entry>
+  <entry index="6200289">a pale sapphire carved into the shape of a swallow.</entry>
+  <entry index="6200290">a rare, expertly cut blue diamond.</entry>
+  <entry index="6200291">an onyx, cut into an oval shape.</entry>
+  <entry index="6200292">a small black pearl.</entry>
+  <entry index="6200293">a small white pearl.</entry>
+  <entry index="6200294">an enormous black pearl.</entry>
+  <entry index="6200295">an enormous white pearl.</entry>
+  <entry index="6200296">an enormous golden pearl.</entry>
+  <entry index="6200297">an emormous pink pearl.</entry>
+  <entry index="6200298">an onyx, expertly cut.</entry>
+  <entry index="6200299">an exquisitely carved ruby.</entry>
+  <entry index="6200300">an enormous raw sapphire. A good jeweler could cut this into something exquisite.</entry>
+  <entry index="6200301">a flawless ruby cut into the shape of a heart.</entry>
+  <entry index="6200302">a fan with black steel blades.</entry>
+  <entry index="6200303">a silk cloth with a gold chrysanthemum on it.</entry>
+  <entry index="6200304">a tiny gold buddha.</entry>
 
   <entry index="6250001">The armor seems quite ordinary.</entry>
   <entry index="6250002">The combat adds for this weapon are +5.</entry>
@@ -748,6 +771,10 @@
   <entry index="6250127">The bracelet contains a medium spell of Shield.</entry>
   <entry index="6250128">The ring contains a medium spell of Shield.</entry>
   <entry index="6250129">The ring contains a spell of Water Walking.</entry>
+  <entry index="6250130">Inside you see a cloudy white liquid.</entry>
+  <entry index="6250131">Inside you see a red liquid.</entry>
+  <entry index="6250132">Inside you see a clear liquid.</entry>
+  <entry index="6250133">Inside you see a yellow liquid.</entry>
 
   <entry index="6300001">You feel a momentary vibration in the {0} as you lift it.</entry>
 
@@ -791,6 +818,7 @@
   <entry index="6300046">{0} {1}.</entry>
   <entry index="6300047">The {0} {1}.</entry>
   <entry index="6300048">{0} jumpkicks you.</entry>
+  <entry index="6300049">{0} kicks you.</entry>
 
   <entry index="6300050">You have been blinded.</entry>
 
@@ -801,6 +829,7 @@
   <entry index="6300064">The presence of high levels of the Dark Power prevents you from removing the ring.</entry>
   <entry index="6300065">A recall ring has been reset!</entry>
   <entry index="6300066">The ring disappears in a puff of smoke.</entry>
+  <entry index="6300067">Kick</entry>
 
   <entry index="6300080">You have gained {0} experience points.</entry>
   <entry index="6300081">You have gained {0} hit point{1}.</entry>
@@ -912,6 +941,7 @@
   <entry index="6300290">You see a crescent moon.</entry>
   <entry index="6300291">The moon is waning crescent.</entry>
   
+  <entry index="6300298">The channel interrupts.</entry>
   <entry index="6300299">The spell fails.</entry>
   <entry index="6300300">You are hiding in the shadows.</entry>
   <entry index="6300301">You are no longer hiding.</entry>
@@ -1021,6 +1051,22 @@
   <entry index="6300404">Land the killing blow on the Necromancer in the Blood Caves.</entry>
   <entry index="6300405">A longbow made of faint blue wood. The string appears to be woven from strands of silver.</entry>
   <entry index="6300406">The combat adds of +5 and is neutral in alignment.</entry>
+  <entry index="6300407">Here is a magic potion for your troubles.</entry>
+  <entry index="6300408">Bring me a Strong Strength Ring and an emerald and I will exchange them for something more useful.</entry>
+  <entry index="6300409">The target is too far to perform a kick.</entry>
+  <entry index="6300410">There are {0} of {1} charges.</entry>
+  <entry index="6300411">I can not teach you greater mastery of your hand skill. But--</entry>
+  <entry index="6300412">You may be worthy of another power.</entry>
+  <entry index="6300413">Do you wish to seek out a powerful weapon?</entry>
+  <entry index="6300414"><![CDATA[I ask that you rescue Konran and help him return home. He shall give you <text color="#CF9FFF">silk finery</text>.]]></entry>
+  <entry index="6300415"><![CDATA[To be considered worthy, slay the ninja shidosha in Leng and retrieve our <text color="#CF9FFF">idol of worship</text>.]]></entry>
+  <entry index="6300416">Return the items to Puck in Leng, there you will find your reward.</entry>
+  <entry index="6300417">I am uncertain that you could guarantee my safe return. I trust only a martial artist.</entry>
+  <entry index="6300418">Thank you! I did not trust that bafoon {0} that came by earlier.</entry>
+  <entry index="6300419">I could have done that myself. But, thanks for your assistance {0}.</entry>
+  <entry index="6300420"><![CDATA[Take this <text color="#CF9FFF">silk finery</text>.]]></entry>
+  <entry index="6300421">Please hurry. My brother must be so worried.</entry>
+  <entry index="6300422"><![CDATA[Bring me <text color="#CF9FFF">silk finery</text> and an <text color="#CF9FFF">idol of worship</text>.]]></entry>
   
   <entry index="6400000">Aazag</entry>
   <entry index="6400001">Alla</entry>

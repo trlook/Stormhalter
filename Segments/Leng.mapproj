@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Leng" version="0.79.0.0">
+<segment name="Leng" version="0.87.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -73,6 +73,11 @@
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
+
+    /*
+    Take the Buddha and the cloth to Puck, who resides on the rooftop garden in Leng town above the gym. Put them both on his hex and type 'Puck, train me' or 'Puck, give gauntlets'. 
+    He will present you with a pair of the legendary, armor-piercing, Crystal Gauntlets.
+    */
     
     public class Puck : VendorEntity
     {
@@ -112,20 +117,29 @@
                 {
                     var items = Segment.GetItemsAt(Location).ToList();
 
-                    var buddha = items.OfType<Kimono>();
-
-                    if (buddha.Any())
+                    var buddha = items.OfType<Buddah>();
+                    var finery = items.OfType<ItemEntity>("SilkFinery"); /* This object is from another map. */
+                    
+                    if (buddha.Any() && finery.Any())
                     {
-                        if (ConsumeFromLocation<Kimono>(counter, 1))
+                        if (ConsumeFromLocation<Buddah>(counter, 1) && ConsumeFromLocation(counter, "SilkFinery", 1))
                         {
-                            new CrystalGauntlets().Move(counter, true, Segment);
+                            var gauntlets = new CrystalGauntlets();
+                            
+                            gauntlets.Move(counter, true, Segment);
+                            gauntlets.Bind(source);
 
                             SayTo(source, 6300349); /* Wield this weapon with courage and honor. */
+                            
+                            var quest = Quests.GetQuest<CrystalGauntletsQuest>();
+                            
+                            if (quest != null && quest.InProgress(source) && !quest.IsComplete(source))
+                                quest.Complete(source);
                         }
                     }
                     else
                     {
-                        SayTo(source, 6300348); /* Bring something from Shidosha and I will make you the weapon. */
+                        SayTo(source, 6300422); /* Bring me silk finery and an idol of worship. */
                     }
                 }
                 else
@@ -140,6 +154,69 @@
             }
         }
     }
+
+    public class Buddah : ItemEntity
+    {
+        /// <inheritdoc />
+        public override int LabelNumber => 6000102; /* Idol */
+        
+        /// <inheritdoc />
+        public override int Weight => 25;
+        
+        /// <inheritdoc />
+        public override uint BasePrice => 50000;
+
+        /// <inheritdoc />
+        public override bool CanBind => true;
+        
+        /// <inheritdoc />
+        public override int Category => 3;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Buddah"/> class.
+        /// </summary>
+        public Buddah(PlayerEntity owner) : base(198)
+        {
+            Bind(owner);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Buddah"/> class.
+        /// </summary>
+        public Buddah(Serial serial) : base(serial)
+        {
+        }
+        
+        /// <inheritdoc />
+        public override void GetDescription(List<LocalizationEntry> entries)
+        {
+            entries.Add(new LocalizationEntry(6200000, 6200304)); /* [You are looking at] [a tiny gold buddha.] */
+        }
+
+        /// <inheritdoc />
+        public override void Serialize(BinaryWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((short)1); /* version */
+        }
+
+        /// <inheritdoc />
+        public override void Deserialize(BinaryReader reader)
+        {
+            base.Deserialize(reader);
+
+            var version = reader.ReadInt16();
+
+            switch (version)
+            {
+                case 1:
+                {
+                    break;
+                }
+            }
+        }
+    }
 ]]></block>
     <block><![CDATA[]]></block>
   </script>
@@ -148,6 +225,7 @@
       <id>10</id>
       <name>Mausoleum</name>
       <height>100</height>
+      <level>20</level>
       <tile x="2" y="2">
         <component type="StaticComponent">
           <static>12</static>
@@ -16324,6 +16402,7 @@
       <id>20</id>
       <name>Griffon Cliffs</name>
       <height>200</height>
+      <level>22</level>
       <tile x="16" y="2">
         <component type="SkyComponent">
           <destinationRegion>10</destinationRegion>
@@ -24748,7 +24827,7 @@
           <moonphases select="all" />
           <professions>Thief</professions>
           <alignments select="all" />
-		  <type>StarRuby</type>
+          <type>StarRuby</type>
           <fail>Stun</fail>
         </component>
         <component type="StaticComponent">
@@ -24807,6 +24886,7 @@
       <id>1</id>
       <name>Surface</name>
       <height>0</height>
+      <level>14</level>
       <tile x="0" y="2">
         <component type="StaticComponent">
           <static>18</static>
@@ -38396,6 +38476,7 @@
       <id>12</id>
       <name>Vlad's Tower 2</name>
       <height>120</height>
+      <level>24</level>
       <tile x="1" y="0">
         <component type="SkyComponent">
           <destinationRegion>10</destinationRegion>
@@ -39219,6 +39300,7 @@
       <id>14</id>
       <name>Vlad's Tower 3</name>
       <height>140</height>
+      <level>26</level>
       <tile x="1" y="0">
         <component type="SkyComponent">
           <destinationRegion>10</destinationRegion>
@@ -40045,6 +40127,7 @@
       <id>16</id>
       <name>Vlad's Tower 4</name>
       <height>160</height>
+      <level>30</level>
       <tile x="-1" y="0">
         <component type="SkyComponent">
           <teleporterId>9</teleporterId>
@@ -40864,6 +40947,7 @@
       <id>18</id>
       <name>Green Floor Dungeon</name>
       <height>180</height>
+      <level>24</level>
       <tile x="41" y="-8" />
       <tile x="42" y="-8" />
       <tile x="43" y="-8" />
@@ -50921,6 +51005,7 @@
       <id>100</id>
       <name>Stables</name>
       <height>0</height>
+      <level>18</level>
       <tile x="15" y="0" />
       <tile x="16" y="0">
         <component type="StaticComponent">
@@ -52224,6 +52309,7 @@
       <id>255</id>
       <name>Ninja Lair</name>
       <height>-10</height>
+      <level>22</level>
       <tile x="0" y="0">
         <component type="StaticComponent">
           <static>1</static>
@@ -53809,6 +53895,7 @@
       <id>39</id>
       <name>Minotaur Ledge</name>
       <height>390</height>
+      <level>24</level>
       <tile x="1" y="-1">
         <component type="WallComponent">
           <wall>159</wall>
@@ -55314,6 +55401,7 @@
       <id>2</id>
       <name>Portals</name>
       <height>80</height>
+      <level>12</level>
       <tile x="3" y="0">
         <component type="StaticComponent">
           <static>23</static>
@@ -57419,6 +57507,7 @@
       <id>30</id>
       <name>Kosh's Lair</name>
       <height>300</height>
+      <level>28</level>
       <tile x="0" y="-1" />
       <tile x="1" y="-1" />
       <tile x="2" y="-1" />
@@ -57812,6 +57901,7 @@
       <id>43</id>
       <name>Drake Lair</name>
       <height>430</height>
+      <level>28</level>
       <tile x="7" y="1">
         <component type="StaticComponent">
           <static>16</static>
@@ -59979,6 +60069,7 @@
       <id>251</id>
       <name>Rift - 50</name>
       <height>-50</height>
+      <level>12</level>
       <tile x="14" y="2">
         <component type="StaticComponent">
           <static>179</static>
@@ -61923,6 +62014,7 @@
       <id>3</id>
       <name>Surface Cliffs</name>
       <height>150</height>
+      <level>14</level>
       <tile x="2" y="2">
         <component type="WallComponent">
           <wall>159</wall>
@@ -62756,6 +62848,7 @@
       <id>246</id>
       <name>Rift -100</name>
       <height>-100</height>
+      <level>12</level>
       <tile x="9" y="0">
         <component type="StaticComponent">
           <static>23</static>
@@ -65311,6 +65404,7 @@
       <id>35</id>
       <name>Waterfall Ledge</name>
       <height>350</height>
+      <level>24</level>
       <tile x="16" y="-3">
         <component type="WallComponent">
           <wall>159</wall>
@@ -71665,6 +71759,7 @@
       <id>236</id>
       <name>Rift -200</name>
       <height>-200</height>
+      <level>12</level>
       <tile x="2" y="0" />
       <tile x="3" y="0">
         <component type="StaticComponent">
@@ -72535,6 +72630,7 @@
       <id>4</id>
       <name>Puck's Garden</name>
       <height>15</height>
+      <level>14</level>
       <tile x="0" y="0">
         <component type="SkyComponent">
           <destinationRegion>10</destinationRegion>
@@ -73329,6 +73425,7 @@
       <id>17</id>
       <name>Vlad's Penthouse</name>
       <height>180</height>
+      <level>32</level>
       <tile x="0" y="0">
         <component type="SkyComponent">
           <destinationRegion>10</destinationRegion>
@@ -74086,6 +74183,7 @@
       <id>99</id>
       <name>Passage</name>
       <height>0</height>
+      <level>18</level>
       <tile x="0" y="0">
         <component type="StaticComponent">
           <static>182</static>
@@ -74811,6 +74909,11 @@
     <subregion name="Sandylair" type="Lair" region="10">
       <rectangles>
         <rectangle left="33" top="2" right="39" bottom="5" />
+      </rectangles>
+    </subregion>
+    <subregion name="priestTemple" type="Town" region="254">
+      <rectangles>
+        <rectangle left="0" top="0" right="5" bottom="7" />
       </rectangles>
     </subregion>
   </subregions>
@@ -75952,14 +76055,17 @@
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
-    //todo make shidosha look like shidosha, add fan/crystal gaunt quest buddha.
     var shidosha = new Ninja()
     {
-        Name = "Shidosha",
+        Body = 245,
+        Name = "shidosha",
+        
         MaxHealth = 3000, Health = 3000,
         BaseDodge = 28,
-        HideDetection = 28,
+
         Experience = 32000,
+
+        HideDetection = 28,
         
         VisibilityDistance = 0,
        
@@ -75970,13 +76076,14 @@
         CanLoot = false,
         
         BasePenetration = ShieldPenetration.Heavy,
-
+        
+        IsTethered = true,
     };
     
     shidosha.AddStatus(new NightVisionStatus(shidosha));
     shidosha.AddStatus(new BreatheWaterStatus(shidosha));
     
-    shidosha.CombatantChangeInterval = TimeSpan.FromSeconds(4.0);
+    shidosha.CombatantChangeInterval = TimeSpan.FromSeconds(21.0);
     
     shidosha.Attacks = new CreatureAttackCollection
     {
@@ -76008,6 +76115,7 @@
    shidosha.AddLoot(new LootPack(
        new LootPackEntry(true, (from, container) => new PearDiamond(1500u),    100, gemsPriceMutator),
        new LootPackEntry(true, (from, container) => new Kimono(),        100),
+       new LootPackEntry(true, (from, container) => new Fan(),        100),
        new LootPackEntry(true, (from, container) => new PermanentDexterityPotion(),        50)
    ));
        
@@ -76015,9 +76123,21 @@
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <script name="OnDeath" enabled="false">
+      <script name="OnDeath" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    if (killer is PlayerEntity player)
+    {
+        var backpack = source.Backpack;
+
+        if (backpack != null)
+            backpack.AddItem(new Buddah(player));
+
+        var slayShidosha = Quests.GetQuest<SlayShidoshaQuest>();
+            
+        if (slayShidosha != null && slayShidosha.InProgress(player) && !slayShidosha.IsComplete(player))
+            slayShidosha.Complete(player);
+    }
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
@@ -76047,6 +76167,7 @@
         BasePenetration = ShieldPenetration.Medium,
         CanLoot = false,
 
+        IsTethered = true,
     };
     
     ninja.AddStatus(new NightVisionStatus(ninja));
@@ -76124,6 +76245,8 @@
     
         FireProtection = 100,
         StunProtection = 100,
+        
+        IsTethered = true,
     };
     
     dragon.AddStatus(new NightVisionStatus(dragon));
@@ -76194,9 +76317,11 @@
         <block><![CDATA[]]></block>
         <block><![CDATA[
     //todo: add vlad model to variables
-    var vlad = new Wraith()
+    var vlad = new Humanoid()
     {
-        Name = "Vampire",
+        Name = "vampire",
+        Body = 80,
+        
         MaxHealth = 7000, Health = 7000,
         BaseDodge = 20,
         BasePenetration = ShieldPenetration.VeryHeavy,
@@ -76209,6 +76334,8 @@
         Weakness = CreatureWeakness.Silver | CreatureWeakness.IceSpearSpell,
         
         VisibilityDistance = 0,
+        
+        IsTethered = true,
     };
     
     vlad.AddStatus(new NightVisionStatus(vlad));
@@ -76290,6 +76417,7 @@
                    CreatureImmunity.Projectile | CreatureImmunity.Magic | CreatureImmunity.Poison,
         Weakness = CreatureWeakness.BlueGlowing | CreatureWeakness.DeathSpell | CreatureWeakness.IceSpearSpell,
     
+        IsTethered = true,
     };
     
     drake.AddStatus(new NightVisionStatus(drake));
@@ -77751,6 +77879,8 @@
         MaxMana = 30, Mana = 30,
         
         Experience = 50,
+        
+        IsTethered = true,
     };
 
     peacekeeper.Attacks = new CreatureAttackCollection
