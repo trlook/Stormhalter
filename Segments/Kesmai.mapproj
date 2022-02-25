@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<segment name="Kesmai" version="0.87.0.0">
+<segment name="Kesmai" version="0.92.0.0">
   <script name="Internal" enabled="true">
     <block><![CDATA[]]></block>
     <block><![CDATA[
@@ -73,8 +73,60 @@
         
         item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
     }
-
-
+    
+    public static void gemsPriceMutatorLow(MobileEntity entity, Container source, ItemEntity item)
+    {
+        /* Item values fall between 0.8 to 1.2 of base price. */
+        var lesserPrice = (int)(item.BasePrice * 0.6);
+        var higherPrice = (int)(item.BasePrice * 0.2);
+        
+        item.Price = Utility.RandomBetween(-lesserPrice, -higherPrice);
+    }
+    
+    public static void gemsPriceMutatorMedium(MobileEntity entity, Container source, ItemEntity item)
+    {
+        /* Item values fall between 0.8 to 1.2 of base price. */
+        var lesserPrice = (int)(item.BasePrice * 0.4);
+        var higherPrice = (int)(item.BasePrice * 1.0);
+        
+        item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
+    }
+    
+    public static void gemsPriceMutatorNormal(MobileEntity entity, Container source, ItemEntity item)
+    {
+        /* Item values fall between 0.8 to 1.2 of base price. */
+        var lesserPrice = (int)(item.BasePrice * 0.2);
+        var higherPrice = (int)(item.BasePrice * 0.2);
+        
+        item.Price = Utility.RandomBetween(-lesserPrice, higherPrice);
+    }
+    
+    public static void gemsPriceMutatorAboveAverage(MobileEntity entity, Container source, ItemEntity item)
+    {
+        /* Item values fall between 0.8 to 1.2 of base price. */
+        var lesserPrice = (int)(item.BasePrice * 1);
+        var higherPrice = (int)(item.BasePrice * 0.4);
+        
+        item.Price = Utility.RandomBetween(lesserPrice, higherPrice);
+    }
+    
+    public static void gemsPriceMutatorHigh(MobileEntity entity, Container source, ItemEntity item)
+    {
+        /* Item values fall between 0.8 to 1.2 of base price. */
+        var lesserPrice = (int)(item.BasePrice * 0.2);
+        var higherPrice = (int)(item.BasePrice * 0.6);
+        
+        item.Price = Utility.RandomBetween(lesserPrice, higherPrice);
+    }
+    
+    public static void gemsPriceMutatorVeryHigh(MobileEntity entity, Container source, ItemEntity item)
+    {
+        /* Item values fall between 0.8 to 1.2 of base price. */
+        var lesserPrice = (int)(item.BasePrice * 0.4);
+        var higherPrice = (int)(item.BasePrice * 0.8);
+        
+        item.Price = Utility.RandomBetween(lesserPrice, higherPrice);
+    } 
 
     /* We use static instances for the implementation. */
     private static ConsumableUrine _orcUrine = new ConsumableUrine("orc");
@@ -10371,7 +10423,7 @@
         </component>
       </tile>
       <tile x="139" y="10">
-        <component type="FloorComponent">
+        <component type="WaterComponent">
           <ground>22</ground>
           <movementCost>3</movementCost>
         </component>
@@ -24452,14 +24504,14 @@
         </component>
       </tile>
       <tile x="15" y="24">
-        <component type="FloorComponent">
-          <ground>22</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
       <tile x="16" y="24">
-        <component type="FloorComponent">
-          <ground>22</ground>
+        <component type="WaterComponent">
+          <ground>601</ground>
           <movementCost>3</movementCost>
         </component>
       </tile>
@@ -30872,7 +30924,7 @@
         </component>
       </tile>
       <tile x="119" y="29">
-        <component type="FloorComponent">
+        <component type="WaterComponent">
           <ground>22</ground>
           <movementCost>3</movementCost>
         </component>
@@ -60178,6 +60230,7 @@
           <wall>26</wall>
           <destroyed>39</destroyed>
           <ruins>44</ruins>
+          <indestructible>true</indestructible>
         </component>
         <component type="WallComponent">
           <wall>25</wall>
@@ -96454,7 +96507,7 @@
     </subregion>
     <subregion name="Dragon's Lair" type="Lair" region="14">
       <rectangles>
-        <rectangle left="12" top="2" right="27" bottom="6" />
+        <rectangle left="12" top="2" right="32" bottom="6" />
       </rectangles>
     </subregion>
     <subregion name="Lockers" type="Town" region="2">
@@ -96489,12 +96542,11 @@
     kobold.Wield(new SteelMace());
     kobold.Equip(new LeatherArmor());
     
-    kobold.AddGold(40);
+    kobold.AddGold(20);
     kobold.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon1Gems,       20,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon1Bottles,    16),
-        new LootPackEntry(true, dungeon1Treasure,   2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator)
+        new LootPackEntry(true, kesmai12Gems,       11.5,     gemsPriceMutatorAboveAverage),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, dungeon1Treasure,   2)
     ));
     
     return kobold;
@@ -96540,12 +96592,12 @@
     orc.Wield(new ShortSword());
     orc.Equip(new LeatherArmor());
             
-    orc.AddGold(100);
+    orc.AddGold(42);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon1Gems,       20,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon1Bottles,    33),
-        new LootPackEntry(true, dungeon1Treasure,   2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator)
+        new LootPackEntry(true, kesmai12Gems,       11.5,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, dungeon1Treasure,   2),
+        new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16)
     ));
     
     return orc;
@@ -96595,13 +96647,11 @@
     orc.Wield(new WoodenShield());
     orc.Equip(new LeatherArmor());    
             
-    orc.AddGold(100);
+    orc.AddGold(42);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon1Gems,       20,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon1Bottles,    33),
-        new LootPackEntry(true, dungeon1Treasure,   2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16)
+        new LootPackEntry(true, kesmai12Gems,       11.56,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, dungeon1Treasure,   2)
     ));
     
     return orc;
@@ -96644,12 +96694,11 @@
     
     skeleton.Wield(new Rapier());
     
-    skeleton.AddGold(60);
+    skeleton.AddGold(30);
     skeleton.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon1Gems,       15,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon1Bottles,    16),
-        new LootPackEntry(true, dungeon1Treasure,   2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator)
+        new LootPackEntry(true, kesmai12Gems,       11.5,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, dungeon1Treasure,   2)
     ));
     
     return skeleton;
@@ -96692,12 +96741,11 @@
     
     skeleton.Wield(new Shortbow());
             
-    skeleton.AddGold(60);
+    skeleton.AddGold(30);
     skeleton.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon1Gems,       15,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon1Bottles,    25),
-        new LootPackEntry(true, dungeon1Treasure,   2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator)
+        new LootPackEntry(true, kesmai12Gems,       11.5,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, dungeon1Treasure,   2)
     ));
     
     return skeleton;
@@ -96754,12 +96802,11 @@
         new CreatureBlock(1, "a tail"),
     };
             
-    wyvern.AddGold(80);
+    wyvern.AddGold(42);
     wyvern.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon1Gems,       20,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon1Bottles,    33),
-        new LootPackEntry(true, dungeon1Treasure,   2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.5, gemsPriceMutator)
+        new LootPackEntry(true, kesmai12Gems,       11.5,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, dungeon1Treasure,   2)
     ));
     
     return wyvern;
@@ -96815,19 +96862,16 @@
     elderTroll.Wield(new SpikedClub());
     elderTroll.Equip(new ChainmailArmor());    
 
-    elderTroll.AddGold(1000);
+    elderTroll.AddGold(300);
     
     elderTroll.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Rings, 33),
-        new LootPackEntry(true, dungeon1Bottles, 33),
+        new LootPackEntry(true, dungeon4Rings, 15),
+        new LootPackEntry(true, dungeon1Bottles, 100),
         
         new LootPackEntry(true, (from, container) => new ClearBalm(),               100.0),
         new LootPackEntry(true, (from, container) => new RamSkull(),                100.0),
-        new LootPackEntry(true, (from, container) => new Yttril(),                  100.0),
-        new LootPackEntry(true, (from, container) => new Diamond(3000u),            100.0), 
-        new LootPackEntry(true, (from, container) => new Diamond(3000u),            100.0), 
-        new LootPackEntry(true, (from, container) => new Diamond(3000u),            100.0),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   20.0, gemsPriceMutator),
+        new LootPackEntry(true, (from, container) => new Yttril(),                  33.0),
+        new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorHigh),
         new LootPackEntry(true, (from, container) => new FireProtectionAmulet(),    20.0)
     ));
     
@@ -97059,7 +97103,7 @@
     {
         Name = _names.Random(),
         Body = (female ? 10 : 9), IsFemale = female,
-        
+        IsInvulnerable = true,
         BaseDodge = 10,
         MaxHealth = 50, Health = 50,
         
@@ -97701,7 +97745,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2Goblin">
+    <entity name="level3Goblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97710,28 +97754,27 @@
         MaxHealth = 22, Health = 22,
         BaseDodge = 11,
                 
-        Experience = 500,
+        Experience = 756,
     
         CanFlee = true,
-        CanLoot = false,
     };
                 
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     goblin.Wield(new BattleAxe());
     goblin.Equip(new LeatherArmor());    
             
-    goblin.AddGold(120);
+    goblin.AddGold(42);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon2Gems,       20,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon2Bottles,    25),
-        new LootPackEntry(true, dungeon2Treasure,   2.6),
-        new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorMedium),
+        new LootPackEntry(true, dungeon2Bottles,    20),
+        new LootPackEntry(true, dungeon2Treasure,   0.74),
+        new LootPackEntry(true, dungeon2Rings,      0.74),
+        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5),
+        new LootPackEntry(true, utilityItems,   0.74)
     ));
     
     return goblin;
@@ -97751,7 +97794,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2GoblinSentry">
+    <entity name="level3GoblinSentry">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -97760,27 +97803,27 @@
         MaxHealth = 20, Health = 20,
         BaseDodge = 11,
                 
-        Experience = 500,
+        Experience = 756,
         
         CanFlee = true,
-        CanLoot = false,
     };
         
     goblin.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     goblin.Wield(new Shortbow());
     goblin.Equip(new LeatherArmor());
             
-    goblin.AddGold(120);
+    goblin.AddGold(42);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon2Gems,       15,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon2Bottles,    25),
-        new LootPackEntry(true, dungeon2Treasure,   2.6),
-        new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator)
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorMedium),
+        new LootPackEntry(true, dungeon2Bottles,    20),
+        new LootPackEntry(true, dungeon2Treasure,   0.74),
+        new LootPackEntry(true, dungeon2Rings,      0.74),
+        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5),
+        new LootPackEntry(true, utilityItems,   0.74)
     ));
     
     return goblin;
@@ -97800,39 +97843,38 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2Orc">
+    <entity name="level3Orc">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 21, Health = 21,
+        MaxHealth = 30, Health = 30,
         BaseDodge = 11,
                 
-        Experience = 500,
+        Experience = 972,
                 
         Movement = 2,
                 
         CanFlee = true,
-        CanLoot = false,
     };
                 
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     orc.Wield(new Longsword());
     orc.Equip(new LeatherArmor());
             
-    orc.AddGold(100);
+    orc.AddGold(49);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon2Gems,       20,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon2Bottles,    33),
-        new LootPackEntry(true, dungeon2Treasure,   2.6),
-        new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16)
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon2Bottles,    20),
+        new LootPackEntry(true, dungeon2Treasure,   1),
+        new LootPackEntry(true, dungeon2Rings,      1),
+        new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16),
+        new LootPackEntry(true, utilityItems,   0.5)
     ));
     
     return orc;
@@ -97852,36 +97894,35 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2OrcSentry">
+    <entity name="level3OrcSentry">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 21, Health = 21,
+        MaxHealth = 27, Health = 27,
         BaseDodge = 11,
                 
         Experience = 500,
         
         CanFlee = true,
-        CanLoot = false,
     };
                 
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     orc.Wield(new Crossbow());
     orc.Equip(new LeatherArmor());
             
-    orc.AddGold(100);
+    orc.AddGold(49);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon2Gems,       20,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon2Bottles,    33),
-        new LootPackEntry(true, dungeon2Treasure,   2.6),
-        new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator)
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon2Bottles,    20),
+        new LootPackEntry(true, dungeon2Treasure,   1),
+        new LootPackEntry(true, dungeon2Rings,      1),
+        new LootPackEntry(true, utilityItems,   0.5)
     ));
     
     return orc;
@@ -97901,16 +97942,16 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2Skeleton">
+    <entity name="level3Skeleton">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var skeleton = new Skeleton()
     {
-        MaxHealth = 17, Health = 17,
+        MaxHealth = 30, Health = 30,
         BaseDodge = 11,
                 
-        Experience = 200,
+        Experience = 972,
                 
         Movement = 2,
         
@@ -97919,20 +97960,19 @@
                 
     skeleton.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     skeleton.Wield(new Rapier());
     skeleton.Wield(new WoodenShield());
             
-    skeleton.AddGold(80);
+    skeleton.AddGold(42);
     skeleton.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon2Gems,       15,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon2Bottles,    25),
-        new LootPackEntry(true, dungeon2Treasure,   2.6),
-        new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new Shuriken(), 16)
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon2Bottles,    20),
+        new LootPackEntry(true, dungeon2Treasure,   1),
+        new LootPackEntry(true, dungeon2Rings,      1),
+        new LootPackEntry(true, utilityItems,   0.5)
     ));
     
     return skeleton;
@@ -97952,39 +97992,38 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2Troll">
+    <entity name="level3Troll">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var troll = new Troll()
     {
-        MaxHealth = 23, Health = 23,
-        BaseDodge = 11,
+        MaxHealth = 33, Health = 33,
+        BaseDodge = 12,
                 
-        Experience = 850,
+        Experience = 1044,
                 
         Movement = 2,
                 
         CanFlee = true,
-        CanLoot = false,
     };
                 
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(5)
+        new CreatureBasicAttack(4)
     };
     
     troll.Wield(new Greatsword());
     troll.Equip(new ChainmailArmor());
     
-    troll.AddGold(200);
-    troll.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon2Gems,       33,    gemsPriceMutator),
-        new LootPackEntry(true, dungeon2Bottles,    50),
-        new LootPackEntry(true, dungeon2Treasure,   2.6),
-        new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator)
-    ));
+    troll.AddGold(66);
+    troll.AddLoot(
+        new LootPack(
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorAboveAverage),
+            new LootPackEntry(true, dungeon2Bottles,    20),
+            new LootPackEntry(true, dungeon2Treasure,   1.1),
+        new LootPackEntry(true, utilityItems,   0.55)
+        ));
     
     return troll;
 ]]></block>
@@ -98003,7 +98042,7 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2Wyvern">
+    <entity name="level3Wyvern">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -98012,7 +98051,7 @@
         MaxHealth = 22, Health = 22,
         BaseDodge = 12,
                 
-        Experience = 700,
+        Experience = 756,
     
         Movement = 2,
         
@@ -98023,13 +98062,13 @@
     wyvern.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(5,     2, 6,   "The wyvern rakes you with its claws."),        50 
+            new CreatureAttack(3,     2, 6,   "The wyvern rakes you with its claws."),        50 
         },
         {
-            new CreatureAttack(7,     3, 8,   "The wyvern bites you."),                       30 
+            new CreatureAttack(3,     3, 7,   "The wyvern bites you."),                       30 
         },
         { 
-            new CreatureAttack(7,     3, 10,  "The wyvern whips you with its tail."),   20
+            new CreatureAttack(3,     3, 8,  "The wyvern whips you with its tail."),   20
         }
     };
     wyvern.Blocks = new CreatureBlockCollection
@@ -98039,13 +98078,13 @@
         new CreatureBlock(1, "a tail"),
     };
             
-    wyvern.AddGold(110);
+    wyvern.AddGold(49);
     wyvern.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon2Gems,       20,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon2Bottles,    33),
-        new LootPackEntry(true, dungeon2Treasure,   2.6),
-        new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator)
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon2Bottles,    20),
+        new LootPackEntry(true, dungeon2Treasure,   1),
+        new LootPackEntry(true, dungeon2Rings,      1),
+        new LootPackEntry(true, utilityItems,   0.5)
     ));
     
     return wyvern;
@@ -98065,16 +98104,16 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2Wight">
+    <entity name="level3Wight">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wight = new Wight()
     {
-        MaxHealth = 21, Health = 21,
+        MaxHealth = 22, Health = 22,
         BaseDodge = 11,
     
-        Experience = 800,
+        Experience = 972,
     
         MaxMana = 8, Mana = 8,
             
@@ -98085,7 +98124,7 @@
         
     wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     wight.Spells = new CreatureSpellCollection()
@@ -98097,13 +98136,13 @@
         
     wight.Wield(new WoodenStaff());
 
-    wight.AddGold(120);
+    wight.AddGold(42);
     wight.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon2Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon2Bottles,    25),
-        new LootPackEntry(true, dungeon2Treasure,   2.6),
-        new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator)
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon2Bottles,    20),
+        new LootPackEntry(true, dungeon2Treasure,   1),
+        new LootPackEntry(true, dungeon2Rings,      1),
+        new LootPackEntry(true, utilityItems,   0.5)
     ));
     
     return wight;
@@ -98123,27 +98162,26 @@
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2OrcArsonist">
+    <entity name="level3OrcArsonist">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 21, Health = 21,
+        MaxHealth = 24, Health = 24,
         BaseDodge = 11,
         MaxMana = 13, Mana = 13,
     
-        Experience = 500,
+        Experience = 972,
     
         CanFlee = true,
-        CanLoot = false,
         
         FireProtection = 100,
     };
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(4)
+        new CreatureBasicAttack(3)
     };
     
     orc.Spells = new CreatureSpellCollection()
@@ -98156,13 +98194,13 @@
     orc.Wield(new WoodenStaff());
     orc.Equip(new LeatherArmor());
             
-    orc.AddGold(100);
+    orc.AddGold(49);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon2Gems,       20,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon2Bottles,    33),
-        new LootPackEntry(true, dungeon2Treasure,   2.6),
-        new LootPackEntry(true, dungeon2Rings,      2.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator)
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon2Bottles,    20),
+        new LootPackEntry(true, dungeon2Treasure,   1),
+        new LootPackEntry(true, dungeon2Rings,      1),
+        new LootPackEntry(true, utilityItems,   0.5)
     ));
     
 return orc;
@@ -98204,14 +98242,12 @@ return orc;
     enragedTroll.Wield(new Longsword());
     enragedTroll.Wield(new WoodenShield());
     
-    enragedTroll.AddGold(200);
+    enragedTroll.AddGold(56);
     enragedTroll.AddLoot(
         new LootPack(
-            new LootPackEntry(true, dungeon2Gems,       20,     gemsPriceMutator),
-            new LootPackEntry(true, dungeon2Bottles,    25),
-            new LootPackEntry(true, dungeon2Treasure,   2.6),
-            new LootPackEntry(true, (from, container) => new PearDiamond(10000u),   1.8, gemsPriceMutator),
-            new LootPackEntry(true, (from, container) => new ClearBalm(), 100)
+        new LootPackEntry(true, kesmai12Gems,       12,     gemsPriceMutatorAboveAverage),
+            new LootPackEntry(true, dungeon2Bottles,    20),
+            new LootPackEntry(true, dungeon2Treasure,   1.1)
         ));
                 
     return enragedTroll;
@@ -98231,16 +98267,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon2Spider">
+    <entity name="level3Spider">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var spider = new Spider()
     {
-        MaxHealth = 27, Health = 27,
-        BaseDodge = 11,
+        MaxHealth = 22, Health = 22,
+        BaseDodge = 13,
     
-        Experience = 200,
+        Experience = 972,
     
         Movement = 0,
         
@@ -98253,7 +98289,7 @@ return orc;
     spider.Attacks = new CreatureAttackCollection
     {
         new CreatureAttack(7,     4, 12,      "The spider bites you", 
-                                    new AttackPoisonComponent(5, 50))
+                                    new AttackPoisonComponent(3))
     };
     
     spider.Blocks = new CreatureBlockCollection
@@ -98261,7 +98297,7 @@ return orc;
        new CreatureBlock(1, "a hairy carapace")
     };
     
-    spider.AddGold(250);
+    spider.AddGold(25);
     
     return spider;
 ]]></block>
@@ -98280,16 +98316,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Troll">
+    <entity name="level5Troll">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var troll = new Troll()
     {
-        MaxHealth = 60, Health = 60,
-        BaseDodge = 12,
+        MaxHealth = 55, Health = 55,
+        BaseDodge = 14,
                 
-        Experience = 900,
+        Experience = 1503,
                 
         Movement = 2,
                 
@@ -98298,20 +98334,21 @@ return orc;
                 
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(5)
+        new CreatureBasicAttack(6)
     };
     
     troll.Wield(new Greatsword());
     troll.Equip(new ChainmailArmor());
     
-    troll.AddGold(500);
+    troll.AddGold(72);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon3Bottles,    33),
-        new LootPackEntry(true, dungeon3Treasure,   2.7),
-        new LootPackEntry(true, dungeon3Rings,      2.7),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator)
+        new LootPackEntry(true, kesmaiwideGems,       5.3,     gemsPriceMutatorAboveAverage),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   1.1),
+        new LootPackEntry(true, dungeon3Rings,      1.1),
+        new LootPackEntry(true, dungeon3Potions,    0.55),
+        new LootPackEntry(true, (from, container) => new Yttril(), 0.5),
+        new LootPackEntry(true, utilityItems,   0.5)
     ));
     
     return troll;
@@ -98331,16 +98368,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Hobgoblin">
+    <entity name="level5Hobgoblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var hobgoblin = new Hobgoblin()
     {
-        MaxHealth = 42, Health = 42,
-        BaseDodge = 12,
+        MaxHealth = 50, Health = 50,
+        BaseDodge = 13,
                 
-        Experience = 750,
+        Experience = 1399,
                 
         Movement = 2,
     };
@@ -98353,14 +98390,15 @@ return orc;
     hobgoblin.Wield(new Longsword());
     hobgoblin.Equip(new LeatherArmor());
     
-    hobgoblin.AddGold(470);
+    hobgoblin.AddGold(63);
     hobgoblin.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon3Bottles,    33),
-        new LootPackEntry(true, dungeon3Treasure,   2.7),
-        new LootPackEntry(true, dungeon3Rings,      2.7),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator)
+        new LootPackEntry(true, kesmaiwideGems,       5.3,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   1),
+        new LootPackEntry(true, dungeon3Rings,      1),
+        new LootPackEntry(true, dungeon3Potions,    0.5),
+        new LootPackEntry(true, (from, container) => new Yttril(), 0.5),
+        new LootPackEntry(true, utilityItems,   0.5)
     ));
     
     return hobgoblin;
@@ -98380,16 +98418,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Orc">
+    <entity name="level5Orc">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 35, Health = 35,
+        MaxHealth = 50, Health = 50,
         BaseDodge = 12,
                 
-        Experience = 500,
+        Experience = 1399,
         
         CanFlee = true,
     };
@@ -98402,15 +98440,15 @@ return orc;
     orc.Wield(new Katana());
     orc.Equip(new LeatherArmor());
             
-    orc.AddGold(100);
+    orc.AddGold(63);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon3Bottles,    33),
-        new LootPackEntry(true, dungeon3Treasure,   2.7),
-        new LootPackEntry(true, dungeon3Rings,      2.7),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16)
+        new LootPackEntry(true, kesmaiwideGems,       5.3,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   1),
+        new LootPackEntry(true, dungeon3Rings,      1),
+        new LootPackEntry(true, dungeon3Potions,    0.5),
+        new LootPackEntry(true, (from, container) => new Yttril(), 0.5),
+        new LootPackEntry(true, utilityItems,   0.5)
     ));
     
     return orc;
@@ -98430,16 +98468,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3OrcSentry">
+    <entity name="level5OrcSentry">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 35, Health = 35,
+        MaxHealth = 45, Health = 45,
         BaseDodge = 12,
                 
-        Experience = 500,
+        Experience = 1399,
         
         CanFlee = true,
     };
@@ -98452,15 +98490,15 @@ return orc;
     orc.Wield(new Crossbow());
     orc.Equip(new LeatherArmor());
             
-    orc.AddGold(100);
+    orc.AddGold(63);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon3Bottles,    33),
-        new LootPackEntry(true, dungeon3Treasure,   2.7),
-        new LootPackEntry(true, dungeon3Rings,      2.7),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new Shuriken(), 11)
+        new LootPackEntry(true, kesmaiwideGems,       5.3,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   1),
+        new LootPackEntry(true, dungeon3Rings,      1),
+        new LootPackEntry(true, dungeon3Potions,    0.5),
+        new LootPackEntry(true, (from, container) => new Yttril(), 0.5),
+        new LootPackEntry(true, utilityItems,   0.5)
     ));
     
     return orc;
@@ -98480,7 +98518,7 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Goblin">
+    <entity name="level5Goblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -98489,7 +98527,7 @@ return orc;
         MaxHealth = 36, Health = 36,
         BaseDodge = 12,
                 
-        Experience = 600,
+        Experience = 1088,
     };
     
     goblin.Attacks = new CreatureAttackCollection()
@@ -98500,15 +98538,15 @@ return orc;
     goblin.Wield(new Longsword());
     goblin.Equip(new LeatherArmor());
             
-    goblin.AddGold(120);
+    goblin.AddGold(54);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon3Bottles,    33),
-        new LootPackEntry(true, dungeon3Treasure,   2.7),
-        new LootPackEntry(true, dungeon3Rings,      2.7),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new LeatherGauntlets(), 7.5)
+        new LootPackEntry(true, kesmaiwideGems,       5.3,     gemsPriceMutatorMedium),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   0.74),
+        new LootPackEntry(true, dungeon3Rings,      0.74),
+        new LootPackEntry(true, dungeon3Potions,    0.74),
+        new LootPackEntry(true, (from, container) => new Yttril(), 0.5),
+        new LootPackEntry(true, utilityItems,   0.37)
     ));
     
     return goblin;
@@ -98528,16 +98566,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3GoblinSentry">
+    <entity name="level5GoblinSentry">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var goblin = new Goblin()
     {
-        MaxHealth = 36, Health = 36,
+        MaxHealth = 32, Health = 32,
         BaseDodge = 12,
                 
-        Experience = 600,
+        Experience = 1088,
     };
         
     goblin.Attacks = new CreatureAttackCollection()
@@ -98548,14 +98586,15 @@ return orc;
     goblin.Wield(new Longbow());
     goblin.Equip(new LeatherArmor());
             
-    goblin.AddGold(120);
+    goblin.AddGold(54);
     goblin.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon3Bottles,    33),
-        new LootPackEntry(true, dungeon3Treasure,   2.7),
-        new LootPackEntry(true, dungeon3Rings,      2.7),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator)
+        new LootPackEntry(true, kesmaiwideGems,       5.3,     gemsPriceMutatorMedium),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   0.74),
+        new LootPackEntry(true, dungeon3Rings,      0.74),
+        new LootPackEntry(true, dungeon3Potions,    0.74),
+        new LootPackEntry(true, (from, container) => new Yttril(), 0.5),
+        new LootPackEntry(true, utilityItems,   0.5)
     ));
     
     return goblin;
@@ -98575,17 +98614,17 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3OrcTrapper">
+    <entity name="level5OrcTrapper">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 35, Health = 35,
-        MaxMana = 12, Mana = 12,
+        MaxHealth = 40, Health = 40,
+        MaxMana = 13, Mana = 13,
         BaseDodge = 12,
     
-        Experience = 500,
+        Experience = 1399,
         
         CanFlee = true,
     };
@@ -98598,7 +98637,7 @@ return orc;
     orc.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CreateWebSpell>(
-            skillLevel: 5, cost: 4, 
+            skillLevel: 5, cost: 7, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 5, cost: 3,
@@ -98608,14 +98647,16 @@ return orc;
     orc.Wield(new WoodenStaff());
     orc.Equip(new LeatherArmor());
         
-    orc.AddGold(100);
+    orc.AddGold(63);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon3Bottles,    33),
-        new LootPackEntry(true, dungeon3Treasure,   2.7),
-        new LootPackEntry(true, dungeon3Rings,      2.7),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator)
+        new LootPackEntry(true, kesmaiwideGems,       5.3,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   1),
+        new LootPackEntry(true, dungeon3Rings,      1),
+        new LootPackEntry(true, dungeon3Potions,    0.5),
+        new LootPackEntry(true, (from, container) => new Yttril(), 0.5),
+        new LootPackEntry(true, utilityItems,   0.5),
+        new LootPackEntry(true, (from, container) => new PineWand(), 0.5)
     ));
     
     return orc;
@@ -98635,18 +98676,19 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Gargoyle">
+    <entity name="level5Gargoyle">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var gargoyle = new Gargoyle()
     {
-        MaxHealth = 82, Health = 82,
-        BaseDodge = 12,
+        MaxHealth = 55, Health = 55,
+        BaseDodge = 16,
                 
-        Experience = 2250,
+        Experience = 1762,
                 
         Movement = 2,
+        MagicProtection = 9,
     };
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
             
@@ -98656,7 +98698,7 @@ return orc;
             new CreatureAttack(5,     4, 8,   "The gargoyle strikes you with its claws."),    60
         },
         { 
-            new CreatureAttack(6,     6, 12,  "The gargoyle batters you with its wings."),    40 
+            new CreatureAttack(5,     6, 12,  "The gargoyle batters you with its wings."),    40 
         },
     };
     
@@ -98667,16 +98709,16 @@ return orc;
         new CreatureBlock(1, "a wing"),
     };
 
-    gargoyle.AddGold(700);
+    gargoyle.AddGold(63);
     gargoyle.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       20,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon3Bottles,    50),
-        new LootPackEntry(true, dungeon3Treasure,   2.7),
-        new LootPackEntry(true, dungeon3Rings,      2.7),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new Yttril(), 1.0),
-        new LootPackEntry(true, (from, container) => new SilverDagger(), 15)
+        new LootPackEntry(true, kesmaiwideGems,       5.3,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   0.5),
+        new LootPackEntry(true, dungeon3Rings,      0.5),
+        new LootPackEntry(true, dungeon3Potions,    0.5),
+        new LootPackEntry(true, (from, container) => new Yttril(), 0.5),
+        new LootPackEntry(true, (from, container) => new SilverDagger(), 7),
+        new LootPackEntry(true, utilityItems,   0.25)
     ));
 
     return gargoyle;
@@ -98696,16 +98738,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Salamander">
+    <entity name="level5Salamander">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var salamander = new Salamander()
     {
-        MaxHealth = 40, Health = 40,
-        BaseDodge = 12,
+        MaxHealth = 50, Health = 50,
+        BaseDodge = 14,
     
-        Experience = 900,
+        Experience = 1503,
     
         Movement = 2,
         
@@ -98718,7 +98760,7 @@ return orc;
             new CreatureAttack(5,     3, 8,   "The salamander claws at you"),             60 
         }, 
         {
-            new CreatureAttack(6,     4, 12,  "The salamander hits you with its tail"),   40 
+            new CreatureAttack(5,     4, 9,  "The salamander hits you with its tail"),   40 
         },
     };
     
@@ -98736,12 +98778,13 @@ return orc;
     };
     
     salamander.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Bottles,    33), 
-        new LootPackEntry(true, dungeon3Treasure,   2.7), 
-        new LootPackEntry(true, dungeon3Rings,      2.7), 
-        new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new FieryRuby(1700u), 100.0)
+        new LootPackEntry(true, (from, container) => new FieryRuby(700u), 100.0),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   1),
+        new LootPackEntry(true, dungeon3Rings,      1),
+        new LootPackEntry(true, dungeon3Potions,    0.5),
+        new LootPackEntry(true, (from, container) => new Yttril(), 0.5),
+        new LootPackEntry(true, utilityItems,   0.5)
     ));
     
     return salamander;
@@ -98761,23 +98804,23 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Wraith">
+    <entity name="level5Wraith">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wraith = new Wraith()
     {
-        MaxHealth = 68, Health = 68,
+        MaxHealth = 50, Health = 50,
         MaxMana = 13, Mana = 13,
-        BaseDodge = 12,
+        BaseDodge = 14,
     
-        Experience = 900,
+        Experience = 1503,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
     wraith.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6)
+        new CreatureBasicAttack(5)
     };
     
     wraith.Spells = new CreatureSpellCollection()
@@ -98789,17 +98832,16 @@ return orc;
         
     wraith.Wield(new BlackStaff());
         
-    wraith.AddGold(270);
+    wraith.AddGold(54);
     wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon3Bottles,    33),
-        new LootPackEntry(true, dungeon3Treasure,   2.7),
-        new LootPackEntry(true, dungeon3Rings,      2.7),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, utilityItems,   2),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new Yttril(), 1.0)
-        //new LootPackEntry(true, (from, container) => new SnakeStaff(), 1.6)
+        new LootPackEntry(true, kesmaiwideGems,       5.3,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   1.1),
+        new LootPackEntry(true, dungeon3Rings,      1.1),
+        new LootPackEntry(true, dungeon3Potions,    0.55),
+        new LootPackEntry(true, (from, container) => new Yttril(), 0.5),
+        new LootPackEntry(true, utilityItems,   0.5),
+        new LootPackEntry(true, (from, container) => new BirchWand(), 0.5)
     ));
     
     return wraith;
@@ -98819,17 +98861,17 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon3Wight">
+    <entity name="level5Wight">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wight = new Wight()
     {
-        MaxHealth = 55, Health = 55,
+        MaxHealth = 36, Health = 36,
         MaxMana = 8, Mana = 8,
-        BaseDodge = 12,
+        BaseDodge = 13,
     
-        Experience = 900,
+        Experience = 1399,
         
         CanFlee = true,
     };
@@ -98837,27 +98879,28 @@ return orc;
         
     wight.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6),
+        new CreatureBasicAttack(5),
     };
     
     wight.Spells =  new CreatureSpellCollection()
     {
         new CreatureSpell<CurseSpell>(
-            skillLevel: 4, cost: 3, 
+            skillLevel: 5, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
     wight.Wield(new WoodenStaff());
         
-    wight.AddGold(120);
+    wight.AddGold(54);
     wight.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon3Bottles,    33),
-        new LootPackEntry(true, dungeon3Treasure,   2.7),
-        new LootPackEntry(true, dungeon3Rings,      2.7),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, utilityItems,   2),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator)
+        new LootPackEntry(true, kesmaiwideGems,       5.3,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   1.1),
+        new LootPackEntry(true, dungeon3Rings,      1.1),
+        new LootPackEntry(true, dungeon3Potions,    0.55),
+        new LootPackEntry(true, (from, container) => new Yttril(), 0.5),
+        new LootPackEntry(true, utilityItems,   0.5),
+        new LootPackEntry(true, (from, container) => new BirchWand(), 0.5)
     ));
     
     return wight;
@@ -98877,37 +98920,37 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Orc">
+    <entity name="level8Orc">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 47, Health = 47,
-        BaseDodge = 13,
+        MaxHealth = 80, Health = 80,
+        BaseDodge = 15,
     
-        Experience = 850,
+        Experience = 2418,
     
         CanFlee = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(8)
     };
     
     orc.Wield(new Longsword());
     orc.Equip(new LeatherArmor());    
     
-    orc.AddGold(225);
+    orc.AddGold(84);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new ThrowingHammer(), 16.67)
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1),
+        new LootPackEntry(true, dungeon4Rings,      1),
+        new LootPackEntry(true, dungeon3Potions,    0.5),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1)
     ));
 
     return orc;
@@ -98927,37 +98970,37 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4OrcSentry">
+    <entity name="level8OrcSentry">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 47, Health = 47,
-        BaseDodge = 13,
+        MaxHealth = 72, Health = 72,
+        BaseDodge = 15,
     
-        Experience = 850,
+        Experience = 2418,
     
         CanFlee = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(8)
     };
     
     orc.Wield(new Longbow());
     orc.Equip(new LeatherArmor());    
     
-    orc.AddGold(255);
+    orc.AddGold(84);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new Shuriken(), 11.11)
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1),
+        new LootPackEntry(true, dungeon4Rings,      1),
+        new LootPackEntry(true, dungeon3Potions,    0.5),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return orc;
@@ -98977,24 +99020,24 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4OrcTrapper">
+    <entity name="level8OrcTrapper">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var orc = new Orc()
     {
-        MaxHealth = 47, Health = 47,
-        MaxMana = 12, Mana = 12,
-        BaseDodge = 13,
+        MaxHealth = 64, Health = 64,
+        MaxMana = 13, Mana = 13,
+        BaseDodge = 15,
     
-        Experience = 600,
+        Experience = 2418,
     
         CanFlee = true,
     };
     
     orc.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(7)
+        new CreatureBasicAttack(8)
     };
     
     orc.Wield(new WoodenStaff());
@@ -99003,21 +99046,22 @@ return orc;
     orc.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<CreateWebSpell>(
-            skillLevel: 6, cost: 4, 
+            skillLevel: 6, cost: 7, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
             skillLevel: 6, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
-    orc.AddGold(255);
+    orc.AddGold(84);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator)
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1),
+        new LootPackEntry(true, dungeon4Rings,      1),
+        new LootPackEntry(true, dungeon3Potions,    0.5),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return orc;
@@ -99037,34 +99081,35 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Troll">
+    <entity name="level8Troll">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var troll = new Troll()
     {
-        MaxHealth = 83, Health = 83,
-        BaseDodge = 13,
+        MaxHealth = 88, Health = 88,
+        BaseDodge = 17,
     
-        Experience = 1000,
+        Experience = 2597,
     };
     
     troll.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(9)
     };
     
     troll.Wield(new Greatsword());
     troll.Equip(new ChainmailArmor());    
     
-    troll.AddGold(625);
+    troll.AddGold(96);
     troll.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator)
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1.1),
+        new LootPackEntry(true, dungeon4Rings,      1.1),
+        new LootPackEntry(true, dungeon3Potions,    0.55),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return troll;
@@ -99084,16 +99129,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Hobgoblin">
+    <entity name="level8Hobgoblin">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var hobgoblin = new Hobgoblin()
     {
-        MaxHealth = 59, Health = 59,
-        BaseDodge = 13,
+        MaxHealth = 80, Health = 80,
+        BaseDodge = 16,
     
-        Experience = 600,
+        Experience = 2418,
     };
         
     hobgoblin.Attacks = new CreatureAttackCollection()
@@ -99104,14 +99149,15 @@ return orc;
     hobgoblin.Wield(new Longsword());
     hobgoblin.Equip(new LeatherArmor());    
     
-    hobgoblin.AddGold(500);
+    hobgoblin.AddGold(84);
     hobgoblin.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator)
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1),
+        new LootPackEntry(true, dungeon4Rings,      1),
+        new LootPackEntry(true, dungeon3Potions,    0.5),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return hobgoblin;
@@ -99131,26 +99177,26 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Gargoyle">
+    <entity name="level8Gargoyle">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var gargoyle = new Gargoyle()
     {
-        MaxHealth = 107, Health = 107,
-        BaseDodge = 13,
+        MaxHealth = 88, Health = 88,
+        BaseDodge = 19,
     
-        Experience = 2300,
+        Experience = 3054,
     };
     gargoyle.AddStatus(new NightVisionStatus(gargoyle));
     
     gargoyle.Attacks = new CreatureAttackCollection
     {
         {
-            new CreatureAttack(7,     6, 12,  "The gargoyle strikes you with its claws"),     60 
+            new CreatureAttack(8,     6, 12,  "The gargoyle strikes you with its claws"),     60 
         }, 
         {   
-            new CreatureAttack(8,     10, 20, "The gargoyle batters you with its wings"),     40 
+            new CreatureAttack(8,     8, 15, "The gargoyle batters you with its wings"),     40 
         }, 
     };
 
@@ -99161,15 +99207,16 @@ return orc;
         new CreatureBlock(1, "a wing"),
     };
     
-    gargoyle.AddGold(1000);
+    gargoyle.AddGold(84);
     gargoyle.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new SilverDagger(), 15)
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   0.5),
+        new LootPackEntry(true, dungeon4Rings,      0.5),
+        new LootPackEntry(true, dungeon3Potions,    0.25),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, (from, container) => new SilverDagger(), 7),
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return gargoyle;
@@ -99189,16 +99236,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Salamander">
+    <entity name="level8Salamander">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var salamander = new Salamander()
     {
-        MaxHealth = 65, Health = 65,
-        BaseDodge = 13,
+        MaxHealth = 80, Health = 80,
+        BaseDodge = 17,
         
-        Experience = 1000,
+        Experience = 2597,
         
         Movement = 2,
         
@@ -99228,14 +99275,14 @@ return orc;
             skillLevel: 8), 100, TimeSpan.FromSeconds(15.0) }
     };
 
-    salamander.AddGold(500);
     salamander.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8), 
-        new LootPackEntry(true, dungeon4Rings,      2.8), 
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new FieryRuby(1800u), 100.0)
+        new LootPackEntry(true, (from, container) => new FieryRuby(800u), 100.0),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1),
+        new LootPackEntry(true, dungeon4Rings,      1),
+        new LootPackEntry(true, dungeon3Potions,    0.5),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return salamander;
@@ -99255,17 +99302,17 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Wraith">
+    <entity name="level8Wraith">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wraith = new Wraith()
     {
-        MaxHealth = 87, Health = 87,
+        MaxHealth = 80, Health = 80,
         MaxMana = 17, Mana = 17,
-        BaseDodge = 13,
+        BaseDodge = 17,
         
-        Experience = 1500,
+        Experience = 2597,
     };
     wraith.AddStatus(new NightVisionStatus(wraith));
         
@@ -99277,25 +99324,26 @@ return orc;
     wraith.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<BlindSpell>(
-            skillLevel: 6, cost: 4, 
+            skillLevel: 8, cost: 4, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<DeathSpell>(
-            skillLevel: 3.5, cost: 6, 
+            skillLevel: 2, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
     wraith.Wield(new BlackStaff());
         
-    wraith.AddGold(550);
+    wraith.AddGold(84);
     wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, utilityItems,   3),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1.1),
+        new LootPackEntry(true, dungeon4Rings,      1.1),
+        new LootPackEntry(true, dungeon3Potions,    0.55),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1),
+        new LootPackEntry(true, (from, container) => new BirchWand(), 1),
+        new LootPackEntry(true, (from, container) => new YouthPotion(), 1)
     ));
     
     return wraith;
@@ -99315,17 +99363,17 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Spectre">
+    <entity name="level8Spectre">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var spectre = new Spectre()
     {
-        MaxHealth = 88, Health = 88,
+        MaxHealth = 80, Health = 80,
         MaxMana = 17, Mana = 17,
-        BaseDodge = 14,
+        BaseDodge = 17,
     
-        Experience = 2000,
+        Experience = 3045,
     
         VisibilityDistance = 1,
     };
@@ -99339,25 +99387,26 @@ return orc;
     spectre.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<StunSpell>(
-            skillLevel: 4, cost: 4, 
+            skillLevel: 8, cost: 9, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<DeathSpell>(
-            skillLevel: 2.5, cost: 6, 
+            skillLevel: 3, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
     spectre.Wield(new WoodenStaff());
     
-    spectre.AddGold(550);
+    spectre.AddGold(72);
     spectre.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, utilityItems,   3),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1.1),
+        new LootPackEntry(true, dungeon4Rings,      1.1),
+        new LootPackEntry(true, dungeon3Potions,    0.55),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1),
+        new LootPackEntry(true, (from, container) => new BirchWand(), 1),
+        new LootPackEntry(true, (from, container) => new YouthPotion(), 1)
     ));
     
     return spectre;
@@ -99377,16 +99426,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Ghoul">
+    <entity name="level8Ghoul">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var ghoul = new Ghoul()
     {
-        MaxHealth = 90, Health = 90,
-        BaseDodge = 13,
+        MaxHealth = 88, Health = 88,
+        BaseDodge = 17,
     
-        Experience = 2500,
+        Experience = 3583,
     
         Movement = 2,
         BasePenetration = ShieldPenetration.Light,
@@ -99396,11 +99445,11 @@ return orc;
     ghoul.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(7,     6, 12,      "The ghoul scratches you with its claws"),  70 
+            new CreatureAttack(8,     6, 12,      "The ghoul scratches you with its claws"),  70 
         }, 
         { 
             new CreatureAttack(8,     10, 18,     "You've been bitten by the ghoul",
-                                                    new AttackPoisonComponent(7)),            30
+                                                    new AttackPoisonComponent(6)),            30
         },
     };
     
@@ -99410,14 +99459,15 @@ return orc;
         new CreatureBlock(4, "a claw"), 
     };
     
-    ghoul.AddGold(950);
+    ghoul.AddGold(112);
     ghoul.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator)
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorHigh),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1.26),
+        new LootPackEntry(true, dungeon4Rings,      1.26),
+        new LootPackEntry(true, dungeon3Potions,    0.63),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return ghoul;
@@ -99437,16 +99487,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Minotaur">
+    <entity name="level8Minotaur">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var minotaur = new Minotaur()
     {
-        MaxHealth = 120, Health = 120,
-        BaseDodge = 13,
+        MaxHealth = 104, Health = 104,
+        BaseDodge = 17,
     
-        Experience = 2200,
+        Experience = 3045,
     
         CanCharge = true,
         BasePenetration = ShieldPenetration.Light,
@@ -99457,14 +99507,14 @@ return orc;
     minotaur.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(9,     8, 22,      "The minotaur hits with a staff"),          60 
+            new CreatureAttack(10,     8, 17,      "The minotaur hits with a staff"),          60 
         }, 
         {
-            new CreatureAttack(9,     13, 25,     "You've been gored by the minotaur",
+            new CreatureAttack(10,     9, 17,     "You've been gored by the minotaur",
                                                     new AttackStunComponent(10.0)),           30
         }, 
         {
-            new CreatureAttack(9,     16, 28,     "You've been trampled by the minotaur"),    10 
+            new CreatureAttack(10,     13, 20,     "You've been trampled by the minotaur"),    10 
         }, 
     };
     
@@ -99476,17 +99526,17 @@ return orc;
     
     minotaur.Wield(new IronRodChaotic());    
     
-    minotaur.AddGold(650);
+    minotaur.AddGold(120);
     minotaur.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    50),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorHigh),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1.26),
+        new LootPackEntry(true, dungeon4Rings,      1.26),
+        new LootPackEntry(true, dungeon3Potions,    0.63),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, (from, container) => new IronRod(), 10),
         new LootPackEntry(true, (from, container) => new SteelGauntlets(), 6.67),
-        new LootPackEntry(true, (from, container) => new IronRod(), 10)
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return minotaur;
@@ -99506,7 +99556,7 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4MeleeFighter">
+    <entity name="level8MeleeFighter">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -99517,10 +99567,10 @@ return orc;
         Name = _names.Random(),
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 110, Health = 110,
-        BaseDodge = 13,
+        MaxHealth = 88, Health = 88,
+        BaseDodge = 16,
     
-        Experience = 2900,
+        Experience = 3045,
     
         Movement = 2,
             
@@ -99529,21 +99579,21 @@ return orc;
     
     fighter.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(9)
     };
     
-    fighter.Wield(new SteelLongsword());
+    fighter.Wield(new Longsword());
     fighter.Equip(new PlatemailArmor());    
     
-    fighter.AddGold(750);
+    fighter.AddGold(96);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator)
-        
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorAboveAverage),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1.1),
+        new LootPackEntry(true, dungeon4Rings,      1.1),
+        new LootPackEntry(true, dungeon3Potions,    0.55),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return fighter;
@@ -99563,7 +99613,7 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4RangedFighter">
+    <entity name="level8RangedFighter">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -99574,10 +99624,10 @@ return orc;
         Name = _names.Random(),
         Body = (female ? 33 : 32), IsFemale = female,
             
-        MaxHealth = 110, Health = 110,
-        BaseDodge = 13,
+        MaxHealth = 88, Health = 88,
+        BaseDodge = 16,
     
-        Experience = 2900,
+        Experience = 3045,
     
         Movement = 2,
             
@@ -99586,21 +99636,21 @@ return orc;
     
     fighter.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(9)
     };
     
-    fighter.Wield(new FineCrossbow());
+    fighter.Wield(new Crossbow());
     fighter.Equip(new PlatemailArmor());    
     
-    fighter.AddGold(550);
+    fighter.AddGold(106);
     fighter.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator)
-        
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorAboveAverage),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1.1),
+        new LootPackEntry(true, dungeon4Rings,      1.1),
+        new LootPackEntry(true, dungeon3Potions,    0.55),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return fighter;
@@ -99620,7 +99670,7 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Wizard">
+    <entity name="level8Wizard">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -99631,11 +99681,11 @@ return orc;
         Name = _names.Random(),
         Body = (female ? 37 : 38), IsFemale = female,
             
-        MaxHealth = 88, Health = 88,
+        MaxHealth = 70, Health = 70,
         MaxMana = 16, Mana = 16,
-        BaseDodge = 13,
+        BaseDodge = 16,
     
-        Experience = 2900,
+        Experience = 3045,
         
         CanSwim = true,
             
@@ -99644,16 +99694,16 @@ return orc;
     
     wizard.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(7)
     };
     
     wizard.Spells = new CreatureSpellCollection
     {
         new CreatureSpell<IceStormSpell>(
-            skillLevel: 5, cost: 6, 
+            skillLevel: 8, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<MagicMissileSpell>(
-            skillLevel: 5, cost: 3, 
+            skillLevel: 6, cost: 3, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
@@ -99661,17 +99711,17 @@ return orc;
     wizard.Wield(new WoodenShield());
     wizard.Equip(new LeatherArmor());
     
-    wizard.AddGold(650);
+    wizard.AddGold(96);
     wizard.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, utilityItems,   3),
-        new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorAboveAverage),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1.1),
+        new LootPackEntry(true, dungeon4Rings,      1.1),
+        new LootPackEntry(true, dungeon3Potions,    0.55),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0),
+        new LootPackEntry(true, utilityItems,   1),
+        new LootPackEntry(true, (from, container) => new PineWand(), 1)
     ));
     
     return wizard;
@@ -99691,7 +99741,7 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Thaum">
+    <entity name="level8Thaum">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -99702,30 +99752,30 @@ return orc;
         Name = _names.Random(),
         Body = (female ? 16 : 48), IsFemale = female,
             
-        MaxHealth = 100, Health = 100,
+        MaxHealth = 70, Health = 70,
         MaxMana = 17, Mana = 17,
-        BaseDodge = 13,
+        BaseDodge = 16,
     
-        Experience = 2900,
+        Experience = 3045,
     
         CanSwim = true,
     };
     
     thaum.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(7)
     };
     
     thaum.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<BlindSpell>(
-            skillLevel: 7, cost: 4, 
+            skillLevel: 8, cost: 4, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<StunSpell>(
-            skillLevel: 7,cost: 4, 
+            skillLevel: 8,cost: 4, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<DeathSpell>(
-            skillLevel: 6, cost: 6, 
+            skillLevel: 3, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
         
@@ -99734,17 +99784,17 @@ return orc;
     thaum.Wield(new WoodenShield());
     thaum.Equip(new LeatherArmor());
         
-    thaum.AddGold(650);
+    thaum.AddGold(96);
     thaum.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, utilityItems,   3),
-        new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0)
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorAboveAverage),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1.1),
+        new LootPackEntry(true, dungeon4Rings,      1.1),
+        new LootPackEntry(true, dungeon3Potions,    0.55),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, (from, container) => new RedRunesRobe(),        10.0),
+        new LootPackEntry(true, utilityItems,   1),
+        new LootPackEntry(true, (from, container) => new BirchWand(), 1)
     ));
     
     return thaum;
@@ -99794,12 +99844,12 @@ return orc;
     
     boar.AddGold(100);
     
+    boar.AddGold(54);
     boar.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon2Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon1Bottles,    33),
-        new LootPackEntry(true, surfaceTreasure,    2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
+        new LootPackEntry(true, kesmai12Gems,       11.4,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, surfaceTreasure,   1),
+        new LootPackEntry(true, (from, container) => new IronOre(), 0.5)
     ));
     
     return boar;
@@ -99850,13 +99900,12 @@ return orc;
         new CreatureBlock(3, "a paw"),
     };
         
-    wolf.AddGold(75);
+    wolf.AddGold(54);
     wolf.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon1Bottles,    33),
-        new LootPackEntry(true, surfaceTreasure,    2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
+        new LootPackEntry(true, kesmai12Gems,       11,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, surfaceTreasure,   1),
+        new LootPackEntry(true, (from, container) => new IronOre(), 0.3)
     ));
         
     return wolf;
@@ -99929,7 +99978,7 @@ return orc;
         MaxHealth = 90, Health = 90,
         BaseDodge = 12,
                 
-        Experience = 800,
+        Experience = 1200,
                 
         Movement = 2,
             
@@ -99956,12 +100005,11 @@ return orc;
         new CreatureBlock(4, "a claw"),
     };
         
-    bear.AddGold(125);
+    bear.AddGold(54);
     bear.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon1Bottles,    33),
-        new LootPackEntry(true, surfaceTreasure,    2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorHigh),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, surfaceTreasure,   1.5),
         new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
     ));
         
@@ -100007,14 +100055,12 @@ return orc;
     orc.Wield(new Longsword());
     orc.Equip(new LeatherArmor());
     
-    orc.AddGold(150);
+    orc.AddGold(42);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon2Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon1Bottles,    33),
-        new LootPackEntry(true, surfaceTreasure,    2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new IronOre(),         1.6),
-        new LootPackEntry(true, (from, container) => new ThrowingHammer(),  16)
+        new LootPackEntry(true, kesmai12Gems,       11.4,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, surfaceTreasure,   1),
+        new LootPackEntry(true, (from, container) => new IronOre(), 0.2)
     ));
     
     return orc;
@@ -100057,14 +100103,12 @@ return orc;
     orc.Wield(new Crossbow());
     orc.Equip(new LeatherArmor());
     
-    orc.AddGold(150);
+    orc.AddGold(42);
     orc.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon2Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon1Bottles,    33),
-        new LootPackEntry(true, surfaceTreasure,    2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new IronOre(),         1.6),
-        new LootPackEntry(true, (from, container) => new ThrowingHammer(),  16)
+        new LootPackEntry(true, kesmai12Gems,       11,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, surfaceTreasure,   1),
+        new LootPackEntry(true, (from, container) => new IronOre(), 0.2)
     ));
     
     return orc;
@@ -100115,15 +100159,12 @@ return orc;
         
     wraith.Wield(new BlackStaff());
         
-    wraith.AddGold(400);
+    wraith.AddGold(42);
     wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon3Bottles,    33),
-        new LootPackEntry(true, surfaceTreasure,    2.5),
-        new LootPackEntry(true, utilityItems,   1),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new IronOre(),         1.6)
-        //new LootPackEntry(true, (from, container) => new SnakeStaff(),    1.6),
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, surfaceTreasure,   1),
+        new LootPackEntry(true, (from, container) => new IronOre(), 0.4)
     ));
     
     return wraith;
@@ -100175,14 +100216,12 @@ return orc;
         
     wight.Wield(new WoodenStaff());
         
-    wight.AddGold(180);
+    wight.AddGold(42);
     wight.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       17,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon2Bottles,    33),
-        new LootPackEntry(true, surfaceTreasure,    2.5),
-        new LootPackEntry(true, utilityItems,   1), 
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),   1.8, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new IronOre(),     1.6)
+        new LootPackEntry(true, kesmai12Gems,       11,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, surfaceTreasure,   1),
+        new LootPackEntry(true, (from, container) => new IronOre(), 0.2)
     ));
     
     return wight;
@@ -100223,13 +100262,12 @@ return orc;
         
     centaur.Wield(new Crossbow());
     
-    centaur.AddGold(200);
+    centaur.AddGold(54);
     centaur.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       13,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon1Bottles,    50),
-        new LootPackEntry(true, surfaceTreasure,    2.5),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new IronOre(), 1.6)
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorHigh),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, surfaceTreasure,   1),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.2)
     ));
     
     return centaur;
@@ -100289,12 +100327,13 @@ return orc;
         new CreatureBlock(3, "a beak"),
     };
         
-    griffin.AddGold(150);
+    griffin.AddGold(77);
     griffin.AddLoot(new LootPack(
-        new LootPackEntry(true, surfaceTreasure, 2.8),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new OchreEgg(), 25.0), 
-        new LootPackEntry(true, (from, container) => new ClearBalm(), 50)
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorHigh),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, surfaceTreasure,   1),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1),
+        new LootPackEntry(true, (from, container) => new OchreEgg(), 1.2)
     ));
         
     return griffin;
@@ -100314,7 +100353,7 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="ydnac">
+    <entity name="BossNotableYdnac">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -100323,11 +100362,11 @@ return orc;
         Name = "Ydnac", Alignment = Alignment.Evil,
         Body = 48,
     
-        MaxHealth = 300, Health = 300,
-        BaseDodge = 15,
+        MaxHealth = 400, Health = 400,
+        BaseDodge = 21,
         MaxMana = 35, Mana = 35,
     
-        Experience = 7000,
+        Experience = 7166,
         
         BasePenetration = ShieldPenetration.Heavy,
     
@@ -100351,7 +100390,7 @@ return orc;
     
     ydnac.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(12)
+        new CreatureBasicAttack(14)
     };
     
     ydnac.Spells = new CreatureSpellCollection()
@@ -100363,7 +100402,7 @@ return orc;
         },
         {
             new CreatureSpell<DeathSpell>(
-                skillLevel: 9, cost: 6, 
+                skillLevel: 7, cost: 6, 
                 mantra: SpellHelper.GenerateMantra(), instantCast: false),      2
         }
     };
@@ -100371,16 +100410,16 @@ return orc;
     ydnac.Wield(new BlackStaff());
     ydnac.Equip(new LeatherArmor());
     
-    ydnac.AddGold(3000);
+    ydnac.AddGold(1200);
     ydnac.AddLoot(new LootPack(
         new LootPackEntry(true, dungeon1Bottles,    20),
         new LootPackEntry(true, ydnacTreasure,      100),
         
         new LootPackEntry(true, (from, container) => new ClearBalm(),           50),
-        new LootPackEntry(true, (from, container) => new Diamond(3100u),        100,    gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new PearDiamond(12000u),    100,    gemsPriceMutator),
         new LootPackEntry(true, utilityItems,   50),
-        new LootPackEntry(true, (from, container) => new StarsRobe(),           100)
+        new LootPackEntry(true, (from, container) => new StarsRobe(),           100),
+        new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
+        new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh)
     ));
     
     return ydnac;
@@ -100461,16 +100500,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4CryptGhoul">
+    <entity name="BossMiniLevel8CryptGhoul">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var ghoul = new Ghoul()
     {
-        MaxHealth = 250, Health = 250,
-        BaseDodge = 14,
+        MaxHealth = 110, Health = 110,
+        BaseDodge = 19,
     
-        Experience = 3100,
+        Experience = 5159,
     
         VisibilityDistance = 0,
             
@@ -100482,11 +100521,11 @@ return orc;
     ghoul.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(9,     13, 18,     "The ghoul scratches you with its claws"),        70 
+            new CreatureAttack(11,     13, 19,     "The ghoul scratches you with its claws"),        70 
         },
         {
-            new CreatureAttack(10,    20, 30,     "You've been bitten by the ghoul",
-                                                    new AttackPoisonComponent(12, 50)),             30
+            new CreatureAttack(11,    13, 19,     "You've been bitten by the ghoul",
+                                                    new AttackPoisonComponent(7)),             30
         },
     };
         
@@ -100496,14 +100535,16 @@ return orc;
         new CreatureBlock(4, "a claw"), 
     };
     
-    ghoul.AddGold(1000);
+    ghoul.AddGold(122);
     ghoul.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       20.0,   gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    50.0),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new Yttril(), 1.6),
-        new LootPackEntry(true, (from, container) => new ReturningHammer(),     33.33)
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorHigh),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1.26),
+        new LootPackEntry(true, dungeon4Rings,      1.26),
+        new LootPackEntry(true, dungeon3Potions,    0.63),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, (from, container) => new ReturningHammer(), 33),
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return ghoul;
@@ -100523,18 +100564,18 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4CryptWraith">
+    <entity name="BossMiniLevel8CryptWraith">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var wraith = new Wraith()
     {
-        MaxHealth = 250, Health = 250,
+        MaxHealth = 100, Health = 100,
         MaxMana = 31, Mana = 31,
-        BaseDodge = 14,
+        BaseDodge = 19,
         HideDetection = 18,
     
-        Experience = 1700,
+        Experience = 3740,
         
         FireProtection = 100,
         IceProtection = 80,
@@ -100543,31 +100584,31 @@ return orc;
     
     wraith.Attacks = new CreatureAttackCollection
     {
-        new CreatureBasicAttack(8)
+        new CreatureBasicAttack(10)
     };
     
     wraith.Spells = new CreatureSpellCollection()
     {
         new CreatureSpell<BlindSpell>(
-            skillLevel: 6, cost: 4, 
+            skillLevel: 10, cost: 4, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false),
         new CreatureSpell<DeathSpell>(
-            skillLevel: 3.5, cost: 6, 
+            skillLevel: 4, cost: 6, 
             mantra: SpellHelper.GenerateMantra(), instantCast: false)
     };
     
     wraith.Wield(new BlackStaff());
     
-    wraith.AddGold(500);
+    wraith.AddGold(98);
     wraith.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
-        new LootPackEntry(true, dungeon4Bottles,    33),
-        new LootPackEntry(true, dungeon4Treasure,   2.8),
-        new LootPackEntry(true, dungeon4Rings,      2.8),
-        new LootPackEntry(true, dungeon3Potions,    0.35),
-        new LootPackEntry(true, utilityItems,   3),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator),
-        new LootPackEntry(true, (from, container) => new Yttril(), 1.6)
+        new LootPackEntry(true, kesmaiwideGems,       10.8,     gemsPriceMutatorNormal),
+        new LootPackEntry(true, dungeon4Bottles,    20),
+        new LootPackEntry(true, dungeon4Treasure,   1),
+        new LootPackEntry(true, dungeon4Rings,      1),
+        new LootPackEntry(true, dungeon3Potions,    0.5),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1),
+        new LootPackEntry(true, (from, container) => new YouthPotion(), 1)
     ));
     
     return wraith;
@@ -100587,16 +100628,16 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4CryptPiranha">
+    <entity name="level8CryptPiranha">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var piranha = new Piranha()
     {
-        MaxHealth = 25, Health = 25,
-        BaseDodge = 13,
+        MaxHealth = 48, Health = 48,
+        BaseDodge = 19,
     
-        Experience = 225,
+        Experience = 2418,
     
         Movement = 1,
         
@@ -100616,10 +100657,10 @@ return orc;
     piranha.Attacks = new CreatureAttackCollection
     {
         { 
-            new CreatureAttack(8,     3, 6,   "The piranha swarm upon you"),      70 
+            new CreatureAttack(10,     4, 10,   "The piranha swarm upon you"),      70 
         }, 
         {
-            new CreatureAttack(9,     5, 10,  "The piranha bite you"),            30 
+            new CreatureAttack(10,     5, 12,  "The piranha bite you"),            30 
         },
     };
         
@@ -100629,7 +100670,7 @@ return orc;
         new CreatureBlock(4, "a tail"), 
     };
     
-    piranha.AddGold(20);
+    piranha.AddGold(84);
         
     return piranha;
 ]]></block>
@@ -100648,17 +100689,17 @@ return orc;
         <block><![CDATA[]]></block>
       </script>
     </entity>
-    <entity name="dungeon4Dragon">
+    <entity name="BossMinorLevel8Dragon">
       <script name="OnSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
     var dragon = new Dragon()
     {
-        MaxHealth = 500, Health = 500,
-        BaseDodge = 20,
+        MaxHealth = 1200, Health = 1200,
+        BaseDodge = 22,
         HideDetection = 18,
     
-        Experience = 11000,
+        Experience = 28665,
         
         CanFly = true,
         CanCharge = true,
@@ -100689,17 +100730,17 @@ return orc;
     {
         {
             new CreatureAttack(14,      8, 25,      "The dragon slashes you with its claws.",
-                                                        new AttackProneComponent(15), 
+                                                        new AttackProneComponent(5), 
                                                         new AttackStunComponent(5)),                30
         },
         {
-            new CreatureAttack(14,      10, 30,     "The dragon smashes you with its tail.",
-                                                        new AttackProneComponent(25), 
+            new CreatureAttack(14,      10, 28,     "The dragon smashes you with its tail.",
+                                                        new AttackProneComponent(10), 
                                                         new AttackStunComponent(10)),               30
         },
         {
-            new CreatureAttack(14,      20, 40,     "The dragon buffets you with its wings.",
-                                                        new AttackProneComponent(35), 
+            new CreatureAttack(14,      20, 32,     "The dragon buffets you with its wings.",
+                                                        new AttackProneComponent(15), 
                                                         new AttackStunComponent(15)),               40
         },
     };
@@ -100718,13 +100759,14 @@ return orc;
     };
     
     //todo: Add the missing the +4 Shining Steel Greatsword to items and then add to Daisy loot table.
-    dragon.AddGold(1000);
+    dragon.AddGold(1200);
     dragon.AddLoot(
         new LootPack(
             new LootPackEntry(true, dungeon4DragonTreasure,     100.0),
             new LootPackEntry(true, dungeon4Rings,              25.0),
             new LootPackEntry(true, dungeon3Potions,    10.0),
-            new LootPackEntry(true, (from, container) => new PearDiamond(16000u),    100, gemsPriceMutator),
+        new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
+        new LootPackEntry(true, kesmaiwideGems,       100,     gemsPriceMutatorVeryHigh),
             new LootPackEntry(true, (from, container) => new ScorpionRobe(),        100),
             new LootPackEntry(true, (from, container) => new SteelLongsword(),        50.0)
         ));
@@ -100738,15 +100780,15 @@ return orc;
         <block><![CDATA[
     if (killer is PlayerEntity player)
     {
+        var backpack = source.Backpack;
+    
+        if (backpack != null)
+            backpack.AddItem(new Agate(player));
+                
         var quest = Quests.GetQuest<KnightsPurposeQuest>();
     
         if (quest != null && quest.InProgress(player))
         {
-            var backpack = source.Backpack;
-
-            if (backpack != null)
-                backpack.AddItem(new Agate(player));
-			
             if (quest.GetStage(player) != KnightsPurposeStage.Dragon)
                 return;
 
@@ -100793,14 +100835,15 @@ else
     
     skeleton.Wield(new Rapier());
     
-    skeleton.AddGold(260);
+    skeleton.AddGold(60);
     skeleton.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       16,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon3Bottles,    16),
-        new LootPackEntry(true, dungeon3Treasure,   2.5),
-        new LootPackEntry(true, dungeon3Rings,      2.5),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   2.1, gemsPriceMutator)
+        new LootPackEntry(true, kesmaiwideGems,       16,     gemsPriceMutatorHigh),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   0.37),
+        new LootPackEntry(true, dungeon3Rings,      0.37),
+        new LootPackEntry(true, dungeon3Potions,    0.37),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return skeleton;
@@ -100841,14 +100884,15 @@ else
     
     skeleton.Wield(new Shortbow());
             
-    skeleton.AddGold(260);
+    skeleton.AddGold(60);
     skeleton.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon3Gems,       16,     gemsPriceMutator),
-        new LootPackEntry(true, dungeon3Bottles,    25),
-        new LootPackEntry(true, dungeon3Treasure,   2.5),
-        new LootPackEntry(true, dungeon3Rings,      2.5),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(14000u),   1.8, gemsPriceMutator)
+        new LootPackEntry(true, kesmaiwideGems,       16,     gemsPriceMutatorHigh),
+        new LootPackEntry(true, dungeon3Bottles,    20),
+        new LootPackEntry(true, dungeon3Treasure,   0.37),
+        new LootPackEntry(true, dungeon3Rings,      0.37),
+        new LootPackEntry(true, dungeon3Potions,    0.37),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return skeleton;;
@@ -100900,14 +100944,15 @@ else
         new CreatureBlock(4, "a decaying limb"),
     };
     
-    mummy.AddGold(350);
+    mummy.AddGold(200);
     mummy.AddLoot(new LootPack(
-        new LootPackEntry(true, dungeon4Gems,       13,     gemsPriceMutator), 
+        new LootPackEntry(true, kesmaiwideGems,       16,     gemsPriceMutatorHigh),
         new LootPackEntry(true, dungeon4Bottles,    20),
-        new LootPackEntry(true, dungeon4Treasure,   2.5),
-        new LootPackEntry(true, dungeon4Rings,      2.5),
-        new LootPackEntry(true, dungeon3Potions,    0.33),
-        new LootPackEntry(true, (from, container) => new PearDiamond(16000u),   2.4, gemsPriceMutator)
+        new LootPackEntry(true, dungeon4Treasure,   0.63),
+        new LootPackEntry(true, dungeon4Rings,      0.63),
+        new LootPackEntry(true, dungeon3Potions,    0.63),
+        new LootPackEntry(true, (from, container) => new Yttril(), 1),
+        new LootPackEntry(true, utilityItems,   1)
     ));
     
     return mummy;
@@ -100946,7 +100991,7 @@ else
     
     sheriff.Attacks = new CreatureAttackCollection()
     {
-        new CreatureBasicAttack(6)
+        new CreatureBasicAttack(10)
     };
     
     sheriff.Home = new RectangleBounds()
@@ -101138,6 +101183,71 @@ else
         <block><![CDATA[]]></block>
       </script>
     </entity>
+    <entity name="BossMiniLevel7Bear">
+      <script name="OnSpawn" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+	var bear = new Bear()
+    {
+        Name = "Big.Bear",
+        MaxHealth = 200, Health = 200,
+        BaseDodge = 21,
+        HideDetection = 23,        
+        Experience = 6000,
+        BasePenetration = ShieldPenetration.Light,
+        CanSwim = true,
+        CanCharge = true,
+        FireProtection = 100,
+        CanStrikeCritically = false,
+    };
+    bear.AddStatus(new NightVisionStatus(bear));
+        
+    bear.Attacks = new CreatureAttackCollection
+    {
+        {
+            new CreatureAttack(12,     8, 18,  "The bear slashes you with its claws."),        50 
+        },
+        {
+            new CreatureAttack(12,     12, 20,  "You've been mauled by the bear."),             40 
+        },
+        {
+            new CreatureAttack(12,     15, 23, "The bear crushes you within its embrace."),     10
+        }
+    };
+        
+    bear.Blocks = new CreatureBlockCollection
+    {
+        new CreatureBlock(6, "the tough hide"),
+        new CreatureBlock(4, "a claw"),
+    };
+        
+    bear.AddGold(54);
+    bear.AddLoot(new LootPack(
+        new LootPackEntry(true, kesmai12Gems,       17.2,     gemsPriceMutatorHigh),
+        new LootPackEntry(true, dungeon1Bottles,    20),
+        new LootPackEntry(true, surfaceTreasure,   1.5),
+        new LootPackEntry(true, (from, container) => new IronOre(), 1.6),
+        new LootPackEntry(true, (from, container) => new GrizzlyJacket(), 100)
+    ));
+        
+    return bear;
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnDeath" enabled="true">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+     source.SayTo(killer, $"Only you can prevent forest fires {killer.Name}.");
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnIncomingPlayer" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+    </entity>
   </entities>
   <spawns>
     <spawn type="LocationSpawner" name="Elder.Troll">
@@ -101267,6 +101377,7 @@ else
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.IsInvulnerable = true;
     if (spawn is Shopkeeper shopkeeper)
     {
         void onRarePurchase(PlayerEntity player, ItemEntity item)
@@ -101295,8 +101406,6 @@ else
         };
         
         // Rare wares.
-        if (Utility.RandomDouble() <= 0.20)  /* 20% total chance to spawn. */
-            wares.Add(new StockEntry("fire and ice protection ring", () => new FireIceProtectionRing(), (int)(800 * merchantUpsell), 1, onRarePurchase));
 
         if (Utility.RandomDouble() <= 0.20)  /* 20% total chance to spawn. */
             wares.Add(new StockEntry("weak strength bracelet", () => new WeakStrengthBracelet(), (int)(500 * merchantUpsell), 1, onRarePurchase));
@@ -101306,12 +101415,6 @@ else
 
         if (Utility.RandomDouble() <= 0.10)  /* 10% total chance to spawn. */
             wares.Add(new StockEntry("death resistance ring", () => new DeathResistanceRing(), (int)(300 * merchantUpsell), 1, onRarePurchase));
-
-        if (Utility.RandomDouble() <= 0.10)  /* 10% total chance to spawn. */
-            wares.Add(new StockEntry("weak dexterity ring", () => new WeakDexterityRing(), (int)(1000 * merchantUpsell), 1, onRarePurchase));
-            
-        if (Utility.RandomDouble() <= 0.02)  /* 2% chance to spawn. */
-            wares.Add(new StockEntry("stun and death protection bracelet", () => new StunDeathProtectionBracelet(), (int)(3000 * merchantUpsell), 1, onRarePurchase));
 
         /* The vendor won't sell everything though, at least not this time around. */
         foreach (var stock in wares.Random(6))
@@ -101341,6 +101444,7 @@ else
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.IsInvulnerable = true;
     if (spawn is Shopkeeper shopkeeper)
     {
         void onRarePurchase(PlayerEntity player, ItemEntity item)
@@ -101370,26 +101474,16 @@ else
         if (Utility.RandomDouble() <= 0.10)  /* 10% chance to spawn */
             wares.Add(new StockEntry("salamander scales", () => new SalamanderScales(), 5000, 1, onRarePurchase));
 
-        if (Utility.RandomDouble() <= 0.10)  /* 10% chance to spawn */
+        if (Utility.RandomDouble() <= 0.05)  /* 10% chance to spawn */
             wares.Add(new StockEntry("dragon scales", () => new DragonScaleArmor(), 10000, 1, onRarePurchase));
 
         /* Rare Boots */
         if (Utility.RandomDouble() <= 0.30)  /* 30% chance to spawn */
             wares.Add(new StockEntry("crocodile boots", () => new CrocodileBoots(), 2500, 1, onRarePurchase));
 
-        if (Utility.RandomDouble() <= 0.10)  /* 5% chance to spawn */
-            wares.Add(new StockEntry("feather fall boots", () => new FeatherFallBoots(), 5000, 1, onRarePurchase));
-
         /* Rare Gloves */
         if (Utility.RandomDouble() <= 0.20)  /* 20% chance to spawn */
             wares.Add(new StockEntry("steel plated gauntlets", () => new SteelGauntlets(), 4000, 1, onRarePurchase));
-        
-        /* Rare Helmets */
-        if (Utility.RandomDouble() <= 0.25)  /* 25% chance to spawn */
-            wares.Add(new StockEntry("bear skull", () => new BearSkull(), 4000, 1, onRarePurchase));
-            
-        if (Utility.RandomDouble() <= 0.10)  /* 10% chance to spawn */
-            wares.Add(new StockEntry("winged helm", () => new WingedHelm(true), 10000, 1, onRarePurchase));
         
         /* The vendor won't sell everything though, at least not this time around. */
         foreach (var stock in wares.Random(6))
@@ -101446,7 +101540,7 @@ else
             new StockEntry("katana",        () => new Katana(),         300, Utility.RandomBetween(1, 4), null),
         };
 
-        if (Utility.RandomDouble() <= 0.25)  /* 25% chance to spawn */
+        if (Utility.RandomDouble() <= 0.10)  /* 25% chance to spawn */
             wares.Add(new StockEntry("silver dagger", () => new SilverDagger(), 3500, 1, onRarePurchase));
 
         if (Utility.RandomDouble() <= 0.20)  /* 15% chance to spawn */
@@ -101480,6 +101574,7 @@ else
         <block><![CDATA[]]></block>
         <block><![CDATA[
     spawn.Name = "Dik";
+    spawn.IsInvulnerable = true;
 
     if (spawn is Shopkeeper shopkeeper)
         shopkeeper.AddCounter(new Point2D(40, 31, 1));
@@ -101502,6 +101597,7 @@ else
       <script name="OnAfterSpawn" enabled="true">
         <block><![CDATA[]]></block>
         <block><![CDATA[
+    spawn.IsInvulnerable = true;
     if (spawn is Shopkeeper shopkeeper)
     {
         void onRarePurchase(PlayerEntity player, ItemEntity item)
@@ -101612,6 +101708,7 @@ else
     /* Override properties from the template. */
     spawn.Name = "Rocky.T.Orc";
     spawn.Body = 30; spawn.IsFemale = false;
+    spawn.IsInvulnerable = true;
     
     if (spawn is Shopkeeper rocky)
     {
@@ -102162,10 +102259,10 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon2Orc" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon2Skeleton" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon2Wight" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon2OrcArsonist" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Orc" size="1" minimum="1" maximum="2" />
+      <entry entity="level3Skeleton" size="1" minimum="1" maximum="2" />
+      <entry entity="level3Wight" size="1" minimum="1" maximum="1" />
+      <entry entity="level3OrcArsonist" size="1" minimum="1" maximum="1" />
       <location x="18" y="30" region="12" />
     </spawn>
     <spawn type="LocationSpawner" name="cryptSpider">
@@ -102185,7 +102282,7 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon2Spider" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Spider" size="1" minimum="1" maximum="1" />
       <location x="15" y="33" region="12" />
     </spawn>
     <spawn type="LocationSpawner" name="cryptTrolls">
@@ -102270,8 +102367,8 @@ else
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -1">
       <minimumDelay>600</minimumDelay>
-      <maximumDelay>300</maximumDelay>
-      <maximum>40</maximum>
+      <maximumDelay>900</maximumDelay>
+      <maximum>20</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -102293,14 +102390,14 @@ else
       <entry entity="dungeon1SkeletonSentry" size="1" minimum="2" maximum="3" />
       <entry entity="dungeon1Wyvern" size="1" minimum="6" maximum="12" />
       <bounds region="11">
-        <inclusion left="2" top="2" right="34" bottom="40" />
+        <inclusion left="3" top="3" right="33" bottom="39" />
         <exclusion left="15" top="34" right="18" bottom="39" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -2">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>300</maximumDelay>
-      <maximum>50</maximum>
+      <maximum>25</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -102315,15 +102412,15 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon2Goblin" size="1" minimum="3" maximum="8" />
-      <entry entity="dungeon2GoblinSentry" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Orc" size="1" minimum="7" maximum="13" />
-      <entry entity="dungeon2OrcSentry" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Skeleton" size="1" minimum="5" maximum="12" />
-      <entry entity="dungeon2Troll" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2Wyvern" size="1" minimum="5" maximum="10" />
-      <entry entity="dungeon2Wight" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon2OrcArsonist" size="1" minimum="1" maximum="2" />
+      <entry entity="level3Goblin" size="1" minimum="3" maximum="8" />
+      <entry entity="level3GoblinSentry" size="1" minimum="2" maximum="2" />
+      <entry entity="level3Orc" size="1" minimum="7" maximum="13" />
+      <entry entity="level3OrcSentry" size="1" minimum="2" maximum="2" />
+      <entry entity="level3Skeleton" size="1" minimum="5" maximum="12" />
+      <entry entity="level3Troll" size="1" minimum="3" maximum="5" />
+      <entry entity="level3Wyvern" size="1" minimum="5" maximum="10" />
+      <entry entity="level3Wight" size="1" minimum="3" maximum="3" />
+      <entry entity="level3OrcArsonist" size="1" minimum="1" maximum="2" />
       <bounds region="12">
         <inclusion left="0" top="2" right="33" bottom="40" />
         <exclusion left="14" top="25" right="34" bottom="38" />
@@ -102348,9 +102445,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Ghoul" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon4CryptGhoul" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4CryptWraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Ghoul" size="1" minimum="1" maximum="2" />
+      <entry entity="BossMiniLevel8CryptGhoul" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMiniLevel8CryptWraith" size="1" minimum="1" maximum="1" />
       <bounds region="14">
         <inclusion left="12" top="2" right="13" bottom="5" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102359,7 +102456,7 @@ else
     <spawn type="RegionSpawner" name="Kesmai Surface West">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>600</maximumDelay>
-      <maximum>2</maximum>
+      <maximum>8</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -102374,9 +102471,9 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceOrc" size="3" minimum="1" maximum="1" />
-      <entry entity="surfaceOrcSentry" size="1" minimum="1" maximum="1" />
-      <entry entity="surfaceBoar" size="3" minimum="1" maximum="2" />
+      <entry entity="surfaceOrc" size="3" minimum="1" maximum="4" />
+      <entry entity="surfaceOrcSentry" size="1" minimum="1" maximum="4" />
+      <entry entity="surfaceBoar" size="3" minimum="1" maximum="6" />
       <entry entity="surfaceCroc" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="4" top="5" right="18" bottom="37" />
@@ -102412,7 +102509,7 @@ else
     <spawn type="RegionSpawner" name="Kesmai Surface East">
       <minimumDelay>900</minimumDelay>
       <maximumDelay>600</maximumDelay>
-      <maximum>20</maximum>
+      <maximum>30</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -102427,17 +102524,17 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceWolf" size="3" minimum="1" maximum="4" />
-      <entry entity="surfaceOrc" size="3" minimum="1" maximum="4" />
-      <entry entity="surfaceBoar" size="3" minimum="1" maximum="4" />
-      <entry entity="surfaceBear" size="1" minimum="1" maximum="4" />
-      <entry entity="surfaceCentaur" size="1" minimum="1" maximum="4" />
+      <entry entity="surfaceWolf" size="3" minimum="1" maximum="8" />
+      <entry entity="surfaceOrc" size="3" minimum="1" maximum="8" />
+      <entry entity="surfaceBoar" size="3" minimum="1" maximum="8" />
+      <entry entity="surfaceBear" size="1" minimum="1" maximum="8" />
+      <entry entity="surfaceCentaur" size="1" minimum="1" maximum="8" />
       <bounds region="1">
-        <inclusion left="64" top="4" right="141" bottom="39" />
-        <exclusion left="65" top="34" right="69" bottom="38" />
+        <inclusion left="64" top="4" right="136" bottom="33" />
+        <inclusion left="70" top="34" right="82" bottom="36" />
         <exclusion left="77" top="29" right="80" bottom="32" />
-        <exclusion left="83" top="33" right="86" bottom="36" />
         <exclusion left="131" top="4" right="141" bottom="14" />
+        <exclusion left="64" top="4" right="72" bottom="9" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai Surface Cemetary">
@@ -102505,7 +102602,7 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="ydnac" size="1" minimum="1" maximum="1" />
+      <entry entity="BossNotableYdnac" size="1" minimum="1" maximum="1" />
       <entry entity="ydnacAbesh" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="138" top="3" right="141" bottom="8" />
@@ -102529,7 +102626,7 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Dragon" size="1" minimum="1" maximum="1" />
+      <entry entity="BossMinorLevel8Dragon" size="1" minimum="1" maximum="1" />
       <bounds region="14">
         <inclusion left="17" top="3" right="19" bottom="5" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102553,7 +102650,7 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4CryptPiranha" size="1" minimum="1" maximum="3" />
+      <entry entity="level8CryptPiranha" size="1" minimum="1" maximum="3" />
       <bounds region="14">
         <inclusion left="12" top="6" right="16" bottom="6" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102579,11 +102676,11 @@ else
       </script>
       <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="3" />
       <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="2" />
-      <entry entity="dungeon3Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Wight" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Wizard" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Wight" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Wizard" size="1" minimum="1" maximum="1" />
       <bounds region="4">
         <inclusion left="2" top="7" right="9" bottom="12" />
         <inclusion left="2" top="14" right="13" bottom="16" />
@@ -102608,10 +102705,10 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Wizard" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4MeleeFighter" size="1" minimum="2" maximum="2" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="1" maximum="2" />
+      <entry entity="level8Wizard" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="level8MeleeFighter" size="1" minimum="2" maximum="2" />
+      <entry entity="level8RangedFighter" size="1" minimum="1" maximum="2" />
       <bounds region="3">
         <inclusion left="9" top="2" right="11" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102636,7 +102733,7 @@ else
         <block><![CDATA[]]></block>
       </script>
       <entry entity="ydnacMummy" size="1" minimum="3" maximum="5" />
-      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
       <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="2" />
       <entry entity="ydnacSkelArc" size="2" minimum="1" maximum="2" />
       <bounds region="4">
@@ -102663,7 +102760,7 @@ else
         <block><![CDATA[]]></block>
       </script>
       <entry entity="ydnacSkelWar" size="3" minimum="1" maximum="1" />
-      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="1" maximum="1" />
       <bounds region="3">
         <inclusion left="13" top="2" right="16" bottom="7" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102697,7 +102794,7 @@ else
     <spawn type="RegionSpawner" name="Kesmai Surface Crocodile">
       <minimumDelay>600</minimumDelay>
       <maximumDelay>1800</maximumDelay>
-      <maximum>2</maximum>
+      <maximum>1</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -102712,7 +102809,7 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="surfaceCroc" size="1" minimum="1" maximum="2" />
+      <entry entity="surfaceCroc" size="1" minimum="1" maximum="1" />
       <bounds region="1">
         <inclusion left="52" top="10" right="68" bottom="18" />
         <inclusion left="59" top="19" right="67" bottom="32" />
@@ -102738,13 +102835,13 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon3Gargoyle" size="1" minimum="0" maximum="2" />
-      <entry entity="dungeon3OrcSentry" size="1" minimum="0" maximum="2" />
-      <entry entity="dungeon3Salamander" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Wight" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Goblin" size="2" minimum="0" maximum="2" />
-      <entry entity="dungeon3Troll" size="2" minimum="0" maximum="2" />
-      <entry entity="dungeon3Hobgoblin" size="3" minimum="1" maximum="2" />
+      <entry entity="level5Gargoyle" size="1" minimum="0" maximum="2" />
+      <entry entity="level5OrcSentry" size="1" minimum="0" maximum="2" />
+      <entry entity="level5Salamander" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Wight" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Goblin" size="2" minimum="0" maximum="2" />
+      <entry entity="level5Troll" size="2" minimum="0" maximum="2" />
+      <entry entity="level5Hobgoblin" size="3" minimum="1" maximum="2" />
       <bounds region="13">
         <inclusion left="2" top="27" right="14" bottom="38" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102768,15 +102865,15 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon3Troll" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Wight" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Hobgoblin" size="3" minimum="0" maximum="1" />
-      <entry entity="dungeon3Orc" size="3" minimum="0" maximum="1" />
-      <entry entity="dungeon3OrcSentry" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3OrcTrapper" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Gargoyle" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Goblin" size="2" minimum="0" maximum="1" />
+      <entry entity="level5Troll" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Wight" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Hobgoblin" size="3" minimum="0" maximum="1" />
+      <entry entity="level5Orc" size="3" minimum="0" maximum="1" />
+      <entry entity="level5OrcSentry" size="1" minimum="0" maximum="1" />
+      <entry entity="level5OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Gargoyle" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Goblin" size="2" minimum="0" maximum="1" />
       <bounds region="13">
         <inclusion left="26" top="26" right="36" bottom="38" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -102800,16 +102897,16 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon3Troll" size="2" minimum="1" maximum="3" />
-      <entry entity="dungeon3Hobgoblin" size="3" minimum="2" maximum="3" />
-      <entry entity="dungeon3Orc" size="3" minimum="2" maximum="3" />
-      <entry entity="dungeon3OrcSentry" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Goblin" size="2" minimum="1" maximum="2" />
-      <entry entity="dungeon3GoblinSentry" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3OrcTrapper" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Gargoyle" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Salamander" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Wraith" size="1" minimum="1" maximum="2" />
+      <entry entity="level5Troll" size="2" minimum="1" maximum="3" />
+      <entry entity="level5Hobgoblin" size="3" minimum="2" maximum="3" />
+      <entry entity="level5Orc" size="3" minimum="2" maximum="3" />
+      <entry entity="level5OrcSentry" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Goblin" size="2" minimum="1" maximum="2" />
+      <entry entity="level5GoblinSentry" size="1" minimum="0" maximum="1" />
+      <entry entity="level5OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Gargoyle" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Salamander" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Wraith" size="1" minimum="1" maximum="2" />
       <bounds region="13">
         <inclusion left="26" top="15" right="44" bottom="38" />
         <exclusion left="26" top="26" right="36" bottom="38" />
@@ -102833,24 +102930,24 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon3Troll" size="2" minimum="1" maximum="2" />
-      <entry entity="dungeon3Hobgoblin" size="3" minimum="1" maximum="1" />
-      <entry entity="dungeon3Orc" size="3" minimum="0" maximum="3" />
-      <entry entity="dungeon3OrcSentry" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Goblin" size="2" minimum="1" maximum="3" />
-      <entry entity="dungeon3GoblinSentry" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3OrcTrapper" size="1" minimum="0" maximum="2" />
-      <entry entity="dungeon3Gargoyle" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Salamander" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon3Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Troll" size="2" minimum="1" maximum="2" />
+      <entry entity="level5Hobgoblin" size="3" minimum="1" maximum="1" />
+      <entry entity="level5Orc" size="3" minimum="0" maximum="3" />
+      <entry entity="level5OrcSentry" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Goblin" size="2" minimum="1" maximum="3" />
+      <entry entity="level5GoblinSentry" size="1" minimum="0" maximum="1" />
+      <entry entity="level5OrcTrapper" size="1" minimum="0" maximum="2" />
+      <entry entity="level5Gargoyle" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Salamander" size="1" minimum="1" maximum="2" />
+      <entry entity="level5Wraith" size="1" minimum="1" maximum="1" />
       <bounds region="13">
         <inclusion left="25" top="1" right="44" bottom="14" />
       </bounds>
     </spawn>
-    <spawn type="RegionSpawner" name="Kesmai -3 Central">
+    <spawn type="RegionSpawner" name="Kesmai -3 A">
       <minimumDelay>300</minimumDelay>
       <maximumDelay>600</maximumDelay>
-      <maximum>19</maximum>
+      <maximum>12</maximum>
       <script name="OnAfterSpawn" enabled="false">
         <block><![CDATA[]]></block>
         <block><![CDATA[
@@ -102865,20 +102962,21 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon3Troll" size="2" minimum="1" maximum="2" />
-      <entry entity="dungeon3Hobgoblin" size="3" minimum="1" maximum="2" />
-      <entry entity="dungeon3Orc" size="3" minimum="1" maximum="2" />
-      <entry entity="dungeon3OrcSentry" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon3Goblin" size="2" minimum="1" maximum="2" />
-      <entry entity="dungeon3GoblinSentry" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon3OrcTrapper" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon3Gargoyle" size="1" minimum="3" maximum="4" />
-      <entry entity="dungeon3Salamander" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon3Wraith" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Troll" size="2" minimum="1" maximum="2" />
+      <entry entity="level5Hobgoblin" size="3" minimum="1" maximum="2" />
+      <entry entity="level5Orc" size="3" minimum="1" maximum="2" />
+      <entry entity="level5OrcSentry" size="1" minimum="0" maximum="2" />
+      <entry entity="level5Goblin" size="2" minimum="1" maximum="2" />
+      <entry entity="level5GoblinSentry" size="1" minimum="1" maximum="2" />
+      <entry entity="level5OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Gargoyle" size="1" minimum="3" maximum="4" />
+      <entry entity="level5Salamander" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Wraith" size="1" minimum="0" maximum="1" />
       <bounds region="13">
-        <inclusion left="10" top="1" right="24" bottom="38" />
+        <inclusion left="17" top="2" right="44" bottom="38" />
         <inclusion left="2" top="24" right="9" bottom="26" />
-        <exclusion left="10" top="28" right="14" bottom="38" />
+        <exclusion left="26" top="26" right="36" bottom="38" />
+        <exclusion left="17" top="2" right="22" bottom="12" />
       </bounds>
     </spawn>
     <spawn type="RegionSpawner" name="Kesmai -4 Oak Hallway">
@@ -102899,21 +102997,21 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Orc" size="3" minimum="2" maximum="2" />
-      <entry entity="dungeon4OrcSentry" size="2" minimum="1" maximum="1" />
-      <entry entity="dungeon4OrcTrapper" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Troll" size="2" minimum="0" maximum="1" />
-      <entry entity="dungeon4Hobgoblin" size="4" minimum="0" maximum="1" />
-      <entry entity="dungeon4Gargoyle" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4MeleeFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Wizard" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Thaum" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Minotaur" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Wraith" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Salamander" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Spectre" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Orc" size="3" minimum="2" maximum="2" />
+      <entry entity="level8OrcSentry" size="2" minimum="1" maximum="1" />
+      <entry entity="level8OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Troll" size="2" minimum="0" maximum="1" />
+      <entry entity="level8Hobgoblin" size="4" minimum="0" maximum="1" />
+      <entry entity="level8Gargoyle" size="1" minimum="0" maximum="1" />
+      <entry entity="level8MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8RangedFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Wizard" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Minotaur" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Wraith" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Salamander" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Ghoul" size="1" minimum="0" maximum="1" />
       <bounds region="14">
         <inclusion left="1" top="6" right="9" bottom="14" />
         <inclusion left="10" top="10" right="26" bottom="12" />
@@ -102938,21 +103036,21 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Orc" size="3" minimum="0" maximum="1" />
-      <entry entity="dungeon4OrcSentry" size="2" minimum="0" maximum="1" />
-      <entry entity="dungeon4OrcTrapper" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Troll" size="2" minimum="0" maximum="1" />
-      <entry entity="dungeon4Hobgoblin" size="4" minimum="0" maximum="1" />
-      <entry entity="dungeon4Gargoyle" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4MeleeFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Wizard" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Thaum" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Minotaur" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Wraith" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Salamander" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Orc" size="3" minimum="0" maximum="1" />
+      <entry entity="level8OrcSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="level8OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Troll" size="2" minimum="0" maximum="1" />
+      <entry entity="level8Hobgoblin" size="4" minimum="0" maximum="1" />
+      <entry entity="level8Gargoyle" size="1" minimum="1" maximum="1" />
+      <entry entity="level8MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8RangedFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Minotaur" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Wraith" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Salamander" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Ghoul" size="1" minimum="0" maximum="1" />
       <bounds region="14">
         <inclusion left="27" top="2" right="32" bottom="18" />
       </bounds>
@@ -102975,21 +103073,21 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Orc" size="3" minimum="1" maximum="0" />
-      <entry entity="dungeon4OrcSentry" size="2" minimum="1" maximum="0" />
-      <entry entity="dungeon4OrcTrapper" size="1" minimum="1" maximum="0" />
-      <entry entity="dungeon4Troll" size="2" minimum="1" maximum="0" />
-      <entry entity="dungeon4Hobgoblin" size="4" minimum="1" maximum="0" />
-      <entry entity="dungeon4Gargoyle" size="1" minimum="1" maximum="0" />
-      <entry entity="dungeon4MeleeFighter" size="1" minimum="1" maximum="0" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="1" maximum="0" />
-      <entry entity="dungeon4Wizard" size="1" minimum="0" maximum="0" />
-      <entry entity="dungeon4Thaum" size="1" minimum="0" maximum="0" />
-      <entry entity="dungeon4Minotaur" size="1" minimum="0" maximum="0" />
-      <entry entity="dungeon4Wraith" size="1" minimum="0" maximum="0" />
-      <entry entity="dungeon4Salamander" size="1" minimum="1" maximum="0" />
-      <entry entity="dungeon4Spectre" size="1" minimum="0" maximum="0" />
-      <entry entity="dungeon4Ghoul" size="1" minimum="0" maximum="0" />
+      <entry entity="level8Orc" size="3" minimum="1" maximum="0" />
+      <entry entity="level8OrcSentry" size="2" minimum="1" maximum="0" />
+      <entry entity="level8OrcTrapper" size="1" minimum="1" maximum="0" />
+      <entry entity="level8Troll" size="2" minimum="1" maximum="0" />
+      <entry entity="level8Hobgoblin" size="4" minimum="1" maximum="0" />
+      <entry entity="level8Gargoyle" size="1" minimum="1" maximum="0" />
+      <entry entity="level8MeleeFighter" size="1" minimum="1" maximum="0" />
+      <entry entity="level8RangedFighter" size="1" minimum="1" maximum="0" />
+      <entry entity="level8Wizard" size="1" minimum="0" maximum="0" />
+      <entry entity="level8Thaum" size="1" minimum="0" maximum="0" />
+      <entry entity="level8Minotaur" size="1" minimum="0" maximum="0" />
+      <entry entity="level8Wraith" size="1" minimum="0" maximum="0" />
+      <entry entity="level8Salamander" size="1" minimum="1" maximum="0" />
+      <entry entity="level8Spectre" size="1" minimum="0" maximum="0" />
+      <entry entity="level8Ghoul" size="1" minimum="0" maximum="0" />
       <bounds region="14">
         <inclusion left="2" top="16" right="12" bottom="38" />
         <exclusion left="0" top="0" right="0" bottom="0" />
@@ -103013,21 +103111,21 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Orc" size="3" minimum="4" maximum="6" />
-      <entry entity="dungeon4OrcSentry" size="2" minimum="0" maximum="1" />
-      <entry entity="dungeon4OrcTrapper" size="1" minimum="0" maximum="2" />
-      <entry entity="dungeon4Troll" size="2" minimum="2" maximum="2" />
-      <entry entity="dungeon4Hobgoblin" size="4" minimum="2" maximum="4" />
-      <entry entity="dungeon4Gargoyle" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4MeleeFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Wizard" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon4Minotaur" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon4Wraith" size="1" minimum="2" maximum="2" />
-      <entry entity="dungeon4Salamander" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Spectre" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Ghoul" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Orc" size="3" minimum="4" maximum="6" />
+      <entry entity="level8OrcSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="level8OrcTrapper" size="1" minimum="0" maximum="2" />
+      <entry entity="level8Troll" size="2" minimum="2" maximum="2" />
+      <entry entity="level8Hobgoblin" size="4" minimum="2" maximum="4" />
+      <entry entity="level8Gargoyle" size="1" minimum="1" maximum="1" />
+      <entry entity="level8MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8RangedFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="1" maximum="2" />
+      <entry entity="level8Minotaur" size="1" minimum="1" maximum="2" />
+      <entry entity="level8Wraith" size="1" minimum="2" maximum="2" />
+      <entry entity="level8Salamander" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Ghoul" size="1" minimum="0" maximum="1" />
       <bounds region="14">
         <inclusion left="11" top="13" right="26" bottom="18" />
         <inclusion left="13" top="19" right="32" bottom="33" />
@@ -103052,56 +103150,327 @@ else
 ]]></block>
         <block><![CDATA[]]></block>
       </script>
-      <entry entity="dungeon4Orc" size="3" minimum="0" maximum="2" />
-      <entry entity="dungeon4OrcSentry" size="2" minimum="0" maximum="1" />
-      <entry entity="dungeon4OrcTrapper" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Troll" size="2" minimum="0" maximum="1" />
-      <entry entity="dungeon4Hobgoblin" size="4" minimum="0" maximum="2" />
-      <entry entity="dungeon4Gargoyle" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4MeleeFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4RangedFighter" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Wizard" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Thaum" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Minotaur" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Wraith" size="1" minimum="1" maximum="1" />
-      <entry entity="dungeon4Salamander" size="1" minimum="0" maximum="1" />
-      <entry entity="dungeon4Spectre" size="1" minimum="1" maximum="2" />
-      <entry entity="dungeon4Ghoul" size="1" minimum="1" maximum="2" />
+      <entry entity="level8Orc" size="3" minimum="0" maximum="2" />
+      <entry entity="level8OrcSentry" size="2" minimum="0" maximum="1" />
+      <entry entity="level8OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Troll" size="2" minimum="0" maximum="1" />
+      <entry entity="level8Hobgoblin" size="4" minimum="0" maximum="2" />
+      <entry entity="level8Gargoyle" size="1" minimum="0" maximum="1" />
+      <entry entity="level8MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8RangedFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Wizard" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Minotaur" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Wraith" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Salamander" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="1" maximum="2" />
+      <entry entity="level8Ghoul" size="1" minimum="1" maximum="2" />
       <bounds region="14">
         <inclusion left="13" top="34" right="32" bottom="38" />
       </bounds>
     </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -1 Northeast">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>5</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dungeon1Kobold" size="1" minimum="6" maximum="12" />
+      <entry entity="dungeon1Orc" size="1" minimum="8" maximum="16" />
+      <entry entity="dungeon1OrcDefender" size="1" minimum="6" maximum="11" />
+      <entry entity="dungeon1Skeleton" size="1" minimum="9" maximum="18" />
+      <entry entity="dungeon1SkeletonSentry" size="1" minimum="2" maximum="3" />
+      <entry entity="dungeon1Wyvern" size="1" minimum="6" maximum="12" />
+      <bounds region="11">
+        <inclusion left="19" top="3" right="33" bottom="15" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -1 Northwest">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>5</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dungeon1Kobold" size="1" minimum="6" maximum="12" />
+      <entry entity="dungeon1Orc" size="1" minimum="8" maximum="16" />
+      <entry entity="dungeon1OrcDefender" size="1" minimum="6" maximum="11" />
+      <entry entity="dungeon1Skeleton" size="1" minimum="9" maximum="18" />
+      <entry entity="dungeon1SkeletonSentry" size="1" minimum="2" maximum="3" />
+      <entry entity="dungeon1Wyvern" size="1" minimum="6" maximum="12" />
+      <bounds region="11">
+        <inclusion left="3" top="3" right="17" bottom="19" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -1 Southwest">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>5</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dungeon1Kobold" size="1" minimum="6" maximum="12" />
+      <entry entity="dungeon1Orc" size="1" minimum="8" maximum="16" />
+      <entry entity="dungeon1OrcDefender" size="1" minimum="6" maximum="11" />
+      <entry entity="dungeon1Skeleton" size="1" minimum="9" maximum="18" />
+      <entry entity="dungeon1SkeletonSentry" size="1" minimum="2" maximum="3" />
+      <entry entity="dungeon1Wyvern" size="1" minimum="6" maximum="12" />
+      <bounds region="11">
+        <inclusion left="3" top="21" right="14" bottom="39" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -1 Southeast">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>900</maximumDelay>
+      <maximum>5</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="dungeon1Kobold" size="1" minimum="6" maximum="12" />
+      <entry entity="dungeon1Orc" size="1" minimum="8" maximum="16" />
+      <entry entity="dungeon1OrcDefender" size="1" minimum="6" maximum="11" />
+      <entry entity="dungeon1Skeleton" size="1" minimum="9" maximum="18" />
+      <entry entity="dungeon1SkeletonSentry" size="1" minimum="2" maximum="3" />
+      <entry entity="dungeon1Wyvern" size="1" minimum="6" maximum="12" />
+      <bounds region="11">
+        <inclusion left="20" top="25" right="33" bottom="39" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -2 Northwest">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>300</maximumDelay>
+      <maximum>9</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level3Goblin" size="1" minimum="3" maximum="8" />
+      <entry entity="level3GoblinSentry" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Orc" size="1" minimum="7" maximum="13" />
+      <entry entity="level3OrcSentry" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Skeleton" size="1" minimum="5" maximum="12" />
+      <entry entity="level3Troll" size="1" minimum="3" maximum="5" />
+      <entry entity="level3Wyvern" size="1" minimum="5" maximum="10" />
+      <entry entity="level3Wight" size="1" minimum="1" maximum="1" />
+      <entry entity="level3OrcArsonist" size="1" minimum="1" maximum="2" />
+      <bounds region="12">
+        <inclusion left="0" top="2" right="14" bottom="17" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -2 Northeast">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>300</maximumDelay>
+      <maximum>9</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level3Goblin" size="1" minimum="3" maximum="8" />
+      <entry entity="level3GoblinSentry" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Orc" size="1" minimum="7" maximum="13" />
+      <entry entity="level3OrcSentry" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Skeleton" size="1" minimum="5" maximum="12" />
+      <entry entity="level3Troll" size="1" minimum="3" maximum="5" />
+      <entry entity="level3Wyvern" size="1" minimum="5" maximum="10" />
+      <entry entity="level3Wight" size="1" minimum="1" maximum="1" />
+      <entry entity="level3OrcArsonist" size="1" minimum="1" maximum="1" />
+      <bounds region="12">
+        <inclusion left="15" top="3" right="32" bottom="17" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -2 South">
+      <minimumDelay>600</minimumDelay>
+      <maximumDelay>300</maximumDelay>
+      <maximum>9</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level3Goblin" size="1" minimum="3" maximum="8" />
+      <entry entity="level3GoblinSentry" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Orc" size="1" minimum="7" maximum="13" />
+      <entry entity="level3OrcSentry" size="1" minimum="1" maximum="1" />
+      <entry entity="level3Skeleton" size="1" minimum="5" maximum="12" />
+      <entry entity="level3Troll" size="1" minimum="3" maximum="5" />
+      <entry entity="level3Wyvern" size="1" minimum="5" maximum="10" />
+      <entry entity="level3Wight" size="1" minimum="2" maximum="2" />
+      <entry entity="level3OrcArsonist" size="1" minimum="1" maximum="2" />
+      <bounds region="12">
+        <inclusion left="2" top="18" right="32" bottom="23" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -3 B">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>19</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level5Troll" size="2" minimum="1" maximum="2" />
+      <entry entity="level5Hobgoblin" size="3" minimum="1" maximum="2" />
+      <entry entity="level5Orc" size="3" minimum="1" maximum="2" />
+      <entry entity="level5OrcSentry" size="1" minimum="0" maximum="2" />
+      <entry entity="level5Goblin" size="2" minimum="1" maximum="2" />
+      <entry entity="level5GoblinSentry" size="1" minimum="0" maximum="2" />
+      <entry entity="level5OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level5Gargoyle" size="1" minimum="3" maximum="4" />
+      <entry entity="level5Salamander" size="1" minimum="1" maximum="1" />
+      <entry entity="level5Wraith" size="1" minimum="0" maximum="1" />
+      <bounds region="13">
+        <inclusion left="10" top="1" right="24" bottom="38" />
+        <inclusion left="2" top="24" right="9" bottom="26" />
+        <exclusion left="10" top="28" right="14" bottom="38" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai -4">
+      <minimumDelay>300</minimumDelay>
+      <maximumDelay>600</maximumDelay>
+      <maximum>20</maximum>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="level8Orc" size="3" minimum="2" maximum="2" />
+      <entry entity="level8OrcSentry" size="2" minimum="1" maximum="1" />
+      <entry entity="level8OrcTrapper" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Troll" size="2" minimum="0" maximum="1" />
+      <entry entity="level8Hobgoblin" size="4" minimum="0" maximum="1" />
+      <entry entity="level8Gargoyle" size="1" minimum="0" maximum="1" />
+      <entry entity="level8MeleeFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8RangedFighter" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Wizard" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Thaum" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Minotaur" size="1" minimum="1" maximum="1" />
+      <entry entity="level8Wraith" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Salamander" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Spectre" size="1" minimum="0" maximum="1" />
+      <entry entity="level8Ghoul" size="1" minimum="0" maximum="1" />
+      <bounds region="14">
+        <inclusion left="1" top="10" right="32" bottom="38" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
+    <spawn type="RegionSpawner" name="Kesmai Surface BigBear">
+      <minimumDelay>3600</minimumDelay>
+      <maximumDelay>4500</maximumDelay>
+      <script name="OnAfterSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <script name="OnBeforeSpawn" enabled="false">
+        <block><![CDATA[]]></block>
+        <block><![CDATA[
+
+]]></block>
+        <block><![CDATA[]]></block>
+      </script>
+      <entry entity="BossMiniLevel7Bear" size="1" minimum="1" maximum="1" />
+      <bounds region="1">
+        <inclusion left="51" top="4" right="95" bottom="29" />
+        <exclusion left="0" top="0" right="0" bottom="0" />
+      </bounds>
+    </spawn>
   </spawns>
   <treasures>
-    <treasure name="dungeon1Gems">
-      <entry weight="2">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new SmallRuby(600u);
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="4">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new SmallTopaz(500u);
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="2">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new SmallAmethyst(1000u);
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-    </treasure>
     <treasure name="dungeon1Bottles">
       <entry weight="12">
         <script name="OnCreate" enabled="true">
@@ -103255,7 +103624,7 @@ else
       </entry>
     </treasure>
     <treasure name="dungeon4Bottles">
-      <entry weight="23">
+      <entry weight="55">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -103264,7 +103633,7 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="4">
+      <entry weight="10">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -103273,7 +103642,7 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -103282,7 +103651,7 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="5">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -103300,7 +103669,7 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="3">
+      <entry weight="15">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -103309,42 +103678,11 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-    </treasure>
-    <treasure name="dungeon2Gems">
-      <entry weight="3">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new SmallRuby(700u);
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="2">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new SmallTopaz(600u);
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="3">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new SmallAmethyst(1100u);
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-    </treasure>
-    <treasure name="dungeon3Gems">
       <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new SmallRuby(800u);
+	return new ManaPotion();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -103353,63 +103691,7 @@ else
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new LargeEmerald(2000u);
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="2">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new SmallAmethyst(1000u);
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="2">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new SmallSapphire(1600u);
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-    </treasure>
-    <treasure name="dungeon4Gems">
-      <entry weight="1">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new Diamond(3000u);
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="3">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new LargeEmerald(2100u);
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="4">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new SmallAmethyst(1100u);
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="3">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new SmallSapphire(1700u);
+	return new YouthPotion();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -103481,15 +103763,6 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="8">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new YouthPotion();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
     </treasure>
     <treasure name="dungeon4Treasure">
       <entry weight="30">
@@ -103514,7 +103787,7 @@ else
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new TigerSkull();
+	return new StunResistanceBracelet();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -103533,15 +103806,6 @@ else
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new FireIceProtectionAmulet();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="8">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new YouthPotion();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -103577,7 +103841,7 @@ else
       </entry>
     </treasure>
     <treasure name="dungeon3Rings">
-      <entry weight="2">
+      <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -103586,7 +103850,7 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="2">
+      <entry weight="3">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -103595,7 +103859,7 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="2">
+      <entry weight="3">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -103613,7 +103877,7 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+      <entry weight="2">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -103633,7 +103897,7 @@ else
       </entry>
     </treasure>
     <treasure name="dungeon4Rings">
-      <entry weight="2">
+      <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
@@ -103660,15 +103924,6 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="2">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new VermeilRing();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
       <entry weight="1">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
@@ -103683,15 +103938,6 @@ else
           <block><![CDATA[]]></block>
           <block><![CDATA[
 	return new BlindResistanceRing();
-]]></block>
-          <block><![CDATA[]]></block>
-        </script>
-      </entry>
-      <entry weight="1">
-        <script name="OnCreate" enabled="true">
-          <block><![CDATA[]]></block>
-          <block><![CDATA[
-	return new WeakDexterityRing();
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -103922,11 +104168,31 @@ else
           <block><![CDATA[]]></block>
         </script>
       </entry>
-      <entry weight="1">
+    </treasure>
+    <treasure name="kesmaiwideGems">
+      <entry weight="10">
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new PineWand();
+	return new SmallRuby(1500u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new SmallTopaz(3000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new SmallAmethyst(6000u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
@@ -103935,7 +104201,45 @@ else
         <script name="OnCreate" enabled="true">
           <block><![CDATA[]]></block>
           <block><![CDATA[
-	return new GlassWand();
+	return new Diamond(10000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+    </treasure>
+    <treasure name="kesmai12Gems">
+      <entry weight="10">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new SmallRuby(250u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="5">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new SmallTopaz(500u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="2">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new SmallAmethyst(1000u);
+]]></block>
+          <block><![CDATA[]]></block>
+        </script>
+      </entry>
+      <entry weight="1">
+        <script name="OnCreate" enabled="true">
+          <block><![CDATA[]]></block>
+          <block><![CDATA[
+	return new Diamond(1700u);
 ]]></block>
           <block><![CDATA[]]></block>
         </script>
